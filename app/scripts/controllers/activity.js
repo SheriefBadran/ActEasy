@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name scaffoldTestApp.controller:StoreCtrl
+ * @name actEasy.controller:StoreCtrl
  * @description
  * # StoreCtrl
- * Controller of the scaffoldTestApp
+ * Controller of the actEasy
  */
-angular.module('scaffoldTestApp')
+angular.module('actEasy')
 
   .controller('ActivitiesCtrl', function ($scope) {
     this.activities = activities;
@@ -37,17 +37,17 @@ angular.module('scaffoldTestApp')
         }
       };
 
-    //$http.get('http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/version/1/geopoint/lat/58.59/lon/16.18/data.json')
-    //    .success(function (data) {
-    //
-    //      store.weather = data;
-    //    });
-
-    $http.get('http://localhost:8000/messages')
+    $http.get('http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/version/1/geopoint/lat/58.59/lon/16.18/data.json')
         .success(function (data) {
 
           store.weather = data;
         });
+
+    //$http.get('http://localhost:8000/messages')
+    //    .success(function (data) {
+    //
+    //      store.weather = data;
+    //    });
   }]);
 
 var activities = [

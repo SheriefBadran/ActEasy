@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name scaffoldTestApp.controller:MainCtrl
+ * @name actEasy.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the scaffoldTestApp
+ * Controller of the actEasy
  */
-angular.module('scaffoldTestApp')
+angular.module('actEasy')
   .controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

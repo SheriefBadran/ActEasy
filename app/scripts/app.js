@@ -2,16 +2,20 @@
 
 /**
  * @ngdoc overview
- * @name scaffoldTestApp
+ * @name actEasy
  * @description
- * # scaffoldTestApp
+ * # actEasy
  *
  * Main module of the application.
  */
 angular
   .module('products', []);
+
 angular
-  .module('scaffoldTestApp', [
+  .module('scaffoldTestApp', []);
+
+angular
+  .module('actEasy', [
     'ngAnimate',
     'ngAria',
     'ngCookies',
@@ -20,7 +24,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'products'
+    'products',
+    'scaffoldTestApp'
   ])
   .config(function ($routeProvider) {
     $routeProvider

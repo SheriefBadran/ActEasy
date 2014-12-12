@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="scaffoldTestApp">
+<html class="no-js" ng-app="actEasy">
   <head>
     <meta charset="utf-8">
     <title></title>
@@ -24,19 +24,19 @@
     <!-- Add your site or application content here -->
     <div class="container" ng-controller="AppController as app">
       <div class="header">
-        <p>{{activity.products[0].name}}</p>
-        <p>{{app.weather}}</p>
-        <tabgroup class="nav">
-          <tab title="Beskrivning">
-            <product-description item="activity.activities[0]"></product-description>
-          </tab>
-          <tab title="Detaljer">
-            <div product-specs item="activity.activities[0]"></div>
-          </tab>
-          <tab title="Omdömen">
-            <product-reviews reviewed-product="activity.activities[0]"></product-reviews>
-          </tab>
-        </tabgroup>
+        <!--<p>{{activity.products[0].name}}</p>-->
+        <!--<p>{{app.weather}}</p>-->
+        <!--<tabgroup class="nav">-->
+          <!--<tab title="Beskrivning">-->
+            <!--<product-description item="activity.activities[0]"></product-description>-->
+          <!--</tab>-->
+          <!--<tab title="Detaljer">-->
+            <!--<div product-specs item="activity.activities[0]"></div>-->
+          <!--</tab>-->
+          <!--<tab title="Omdömen">-->
+            <!--<product-reviews reviewed-product="activity.activities[0]"></product-reviews>-->
+          <!--</tab>-->
+        <!--</tabgroup>-->
         <ul class="nav nav-pills pull-right">
           <li class="active"><a ng-href="#">Home</a></li>
           <li><a ng-href="#/about">About</a></li>
@@ -94,7 +94,8 @@
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/activity.js"></script>
         <script src="scripts/directives/tabgroup.js"></script>
-        <script src="scripts/services/myservice.js"></script>
+        <script src="scripts/directives/activities.js"></script>
+        <script src="scripts/services/weatherService.js"></script>
         <!-- endbuild -->
 </body>
 </html>

@@ -71,9 +71,39 @@ db.once('open', function callback () {
 var Message = new mongoose.Schema({sender: String, text: String, serverId: String, _id: Object, date: Date});
 var ContactMessage = new mongoose.Schema({firstname: String, surname: String, email: String, webpage: String, comment: String, date: Date});
 
+var Activity = new mongoose.Schema({
+    "name": String,
+    "indoors": Boolean,
+    "activity-name": String,
+    "category": String,
+    "sub-category": String,
+    "description": String,
+    "contact": {
+        "tel": String,
+        "email": String,
+        "website": String
+    },
+    "price": Number,
+    "booking": Boolean,
+    "booking-link": String,
+    "limitations": String,
+    "images": [],
+    "thumbs": [],
+    "reviews": [],
+    "address": {
+        "street": String,
+        "postal-code": String,
+        "city": String
+    },
+    "loc": []
+});
+
+Activity.index({loc: '2dsphere'});
+
 // Models
 var MessageModel = mongoose.model('Message', Message);
 var ContactMessageModel = mongoose.model('ContactMessage', ContactMessage);
+var ActivityModel = mongoose.model('Activity', Activity);
 
 var sanitize = function (string) {
 
@@ -179,7 +209,21 @@ app.get( '/messages', function( request, response ) {
         // var mess = JSON.parse(messages);
         return response.send(messages);
     });
+});
 
+app.get('/activities', function (request, response) {
+
+    return ActivityModel.find({
+        loc: {
+            $geoWithin: {
+                $centerSphere: [
+                    [16.3577567, 56.6775846], 2/6371]
+            }
+        }
+    }, function(err, activities) {
+
+        return response.send(activities);
+    });
 });
 
 // Insert a new message

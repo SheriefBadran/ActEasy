@@ -7,12 +7,32 @@
  * # activities
  */
 angular.module('scaffoldTestApp')
-  .directive('activities', ['weatherService', function (weather) {
+  .directive('activities', ['activityService','weatherService', function (activityService, weatherService) {
     return {
-      template: '<div></div>',
+      transclude: true,
       restrict: 'E',
-      controller: function () {
-        console.log(weather);
+      controller: function ($scope) {
+        $scope.activities = [];
+
+        //activityService.success(function (data) {
+        //
+        //  $scope.activities = data;
+        //});
+
+        this.addActivity = function (activity) {
+        };
       }
     };
-  }]);
+  }])
+
+  .directive('activity', function() {
+    return {
+      template: '<div>test</div>',
+      restrict: 'E',
+      require: '^activities',
+      link: function (scope, element, attrs, ctrl) {
+
+        ctrl.addActivity(element);
+      }
+    };
+  });

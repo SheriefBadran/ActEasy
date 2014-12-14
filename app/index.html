@@ -16,14 +16,15 @@
     <link rel="stylesheet" href="styles/validate.css">
     <!-- endbuild -->
   </head>
-  <body ng-controller="ActivitiesCtrl as activity">
+  <body>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-controller="AppController as app">
+    <div class="container">
       <div class="header">
+        <!--<p>{{activity.activities}}</p>-->
         <!--<p>{{activity.products[0].name}}</p>-->
         <!--<p>{{app.weather}}</p>-->
         <!--<tabgroup class="nav">-->
@@ -96,6 +97,7 @@
         <script src="scripts/directives/tabgroup.js"></script>
         <script src="scripts/directives/activities.js"></script>
         <script src="scripts/services/weatherService.js"></script>
+        <script src="scripts/services/activityService.js"></script>
         <!-- endbuild -->
 </body>
 </html>

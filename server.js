@@ -14,7 +14,7 @@ var application_root = __dirname,
 
 
 // Configure server (since Express 4.0.0)
-var env = process.env.NODE_ENV || 'development'
+var env = process.env.NODE_ENV || 'development';
 
 if ('development' == env) {
 
@@ -27,8 +27,8 @@ if ('development' == env) {
     // Enable CORS.. not recomended to do here, better to enable via Gruntfile.
     app.all('/*', function(req, res, next) {
         res.header('Access-Control-Allow-Origin', '*');
-        //res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');
-        //res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');
+        res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
         next();
     });
 
@@ -39,7 +39,7 @@ if ('development' == env) {
     app.use(bodyParser());
     app.use(methodOverride());
     app.use(errorHandler({ dumpExceptions: true, showStack: true }));
-};
+}
 
 
 //Start server
@@ -108,7 +108,7 @@ var ActivityModel = mongoose.model('Activity', Activity);
 var sanitize = function (string) {
 
     return string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
+};
 
 // Socket.io
 io.sockets.on('connection', function(client){
@@ -211,7 +211,7 @@ app.get( '/messages', function( request, response ) {
     });
 });
 
-app.get('/activities', function (request, response) {
+app.get('/near-activities', function (request, response) {
 
     return ActivityModel.find({
         loc: {

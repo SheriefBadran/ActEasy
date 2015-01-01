@@ -11,13 +11,8 @@ angular.module('scaffoldTestApp')
   .service('weatherService', ['$http', function ($http) {
 
      // AngularJS will instantiate a singleton by calling "new" on this function
-    var store = this;
-    store.weather = [];
+    this.getWeather = function () {
 
-    //$http.get('http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/version/1/geopoint/lat/58.59/lon/16.18/data.json')
-    //  .success(function (data) {
-    //
-    //    store.weather = data;
-    //  });
-
+      return $http.get('http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/version/1/geopoint/lat/56.68/lon/16.36/data.json');
+    };
   }]);

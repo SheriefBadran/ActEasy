@@ -11,9 +11,8 @@ angular.module('scaffoldTestApp')
   .service('activityService', ['$http', function ($http) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
-    var store = this;
-    store.activities = [];
+    this.getActivities = function(){
 
-    return $http.get('http://localhost:8000/activities');
-
+      return $http.get('http://localhost:8000/near-activities');
+    };
   }]);

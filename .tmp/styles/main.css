@@ -4,7 +4,13 @@ body {
   padding-bottom: 20px;
 }
 
-
+.vertical-align {
+  display: -webkit-flex;
+  display: flex;
+  /*flex-direction: row;*/
+  -webkit-align-items: center;
+  align-items: center;
+}
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,

@@ -7,7 +7,7 @@
  * # ActivityCtrl
  * Controller of the scaffoldTestApp
  */
-angular.module('scaffoldTestApp')
+angular.module('activities')
   .controller('ActivityCtrl', ['activityService', 'weatherService', function (activityService, weatherService) {
 
     // bind the data to be accessed from directives.

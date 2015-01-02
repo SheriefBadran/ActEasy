@@ -9,10 +9,10 @@
  * Main module of the application.
  */
 angular
-  .module('products', []);
+  .module('activities', []);
 
 angular
-  .module('scaffoldTestApp', []);
+  .module('services', []);
 
 angular
   .module('actEasy', [
@@ -24,8 +24,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'products',
-    'scaffoldTestApp'
+    'activities',
+    'services'
   ])
   .config(function ($routeProvider) {
     $routeProvider

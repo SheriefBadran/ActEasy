@@ -7,7 +7,7 @@
  * # locationService
  * Service in the scaffoldTestApp.
  */
-angular.module('scaffoldTestApp')
+angular.module('services')
   .service('activityService', ['$http', function ($http) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 

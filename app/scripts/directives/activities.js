@@ -6,7 +6,7 @@
  * @description
  * # activities
  */
-angular.module('scaffoldTestApp')
+angular.module('activities')
 
   .directive('activity', function() {
     return {

@@ -30,11 +30,19 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html'
+        templateUrl: 'views/login.html'
       })
       .when('/about', {
-        templateUrl: 'partials/tabMenu.html'
-        //controller: 'AboutCtrl'
+        templateUrl: 'views/about.html',
+        controller: 'ViewCtrl',
+        resolve: {
+          view: function ($q) {
+            var defer = $q.defer();
+            defer.resolve();
+
+            return defer.promise;
+          }
+        }
       })
       .otherwise({
         redirectTo: '/'

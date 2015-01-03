@@ -7,11 +7,11 @@ var application_root = __dirname,
     bodyParser      = require('body-parser'), // (since Express 4.0.0)
     methodOverride  = require('method-override'), // (since Express 4.0.0)
     errorHandler    = require('errorhandler'), // (since Express 4.0.0)
-    path            = require( 'path' ), // Utilities for dealing with file paths
-    mongoose        = require( 'mongoose' ), // MongoDB integration
+    path            = require('path'), // Utilities for dealing with file paths
+    mongoose        = require('mongoose'), // MongoDB integration
     app             = express();
 
-
+var Activity        = require('./models/activity');
 
 // Configure server (since Express 4.0.0)
 var env = process.env.NODE_ENV || 'development';
@@ -64,52 +64,6 @@ db.once('open', function callback () {
   console.log('yay!!');
 });
 
-var Activity = new mongoose.Schema({
-    "name": String,
-    "indoors": Boolean,
-    "activity-name": String,
-    "category": String,
-    "sub-category": String,
-    "description": String,
-    "contact": {
-        "tel": String,
-        "email": String,
-        "website": String
-    },
-    "price": Number,
-    "booking": Boolean,
-    "booking-link": String,
-    "limitations": String,
-    "images": [],
-    "thumbs": [],
-    "reviews": [],
-    "address": {
-        "street": String,
-        "postal-code": String,
-        "city": String
-    },
-    "loc": []
-});
-
-Activity.index({loc: '2dsphere'});
-var ActivityModel = mongoose.model('Activity', Activity);
-
-
-//app.get('/near-activities', function (request, response) {
-//
-//    return ActivityModel.find({
-//        loc: {
-//            $geoWithin: {
-//                $centerSphere: [
-//                    [16.3577567, 56.6775846], 2/6371]
-//            }
-//        }
-//    }, function(err, activities) {
-//
-//        return response.send(activities);
-//    });
-//});
-
 // REGISTER GET, PUT AND DELETE ROUTES for a activities below. This works since Express 4.0.0
 // Call out HTTP verbs on the route() method. route() method provides an instance of Route.
 app.route('/near-activities')
@@ -117,7 +71,7 @@ app.route('/near-activities')
 	// Get a single message by id
 	.get(function(request, response) {
 
-      return ActivityModel.find({
+      return Activity.find({
           loc: {
               $geoWithin: {
                   $centerSphere: [

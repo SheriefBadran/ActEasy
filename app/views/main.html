@@ -2,7 +2,7 @@
   <h1>ActEasy!</h1>
 </header>
 <div ng-controller="ActivityCtrl as activityCollection">
-  <button ng-click="activityCollection.showOutdoors = !activityCollection.showOutdoors">Toggle</button>
+  <button class="btn btn default btn-sm" ng-click="activityCollection.showOutdoors = !activityCollection.showOutdoors">Toggle</button>
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="activity in activityCollection.activities" ng-hide="(activity.indoors && activityCollection.showOutdoors) ||
                                                                                                (!activity.indoors && !activityCollection.showOutdoors)">
@@ -12,5 +12,6 @@
       <!--</header>-->
     </li>
   </ul>
+  <a href="//localhost:8000/logout" class="btn btn-default btn-sm">Logout</a>
 </div>
 <!--<activities ng-transclude=""><activity></activity></activities>-->

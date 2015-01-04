@@ -5,13 +5,16 @@ var application_root = __dirname,
     express         = require('express'), //Web framework
     morgan          = require('morgan'), // (since Express 4.0.0)
     bodyParser      = require('body-parser'), // (since Express 4.0.0)
+    cookieParser    = require('cookie-parser'),
     methodOverride  = require('method-override'), // (since Express 4.0.0)
     errorHandler    = require('errorhandler'), // (since Express 4.0.0)
     path            = require('path'), // Utilities for dealing with file paths
     mongoose        = require('mongoose'), // MongoDB integration
+    passport        = require('passport'),
+    session         = require('express-session'),
     app             = express();
 
-var Activity        = require('./models/activity');
+var configDB        = require('./config/database.js');
 
 // Configure server (since Express 4.0.0)
 var env = process.env.NODE_ENV || 'development';
@@ -20,6 +23,7 @@ if ('development' == env) {
 
     app.use('/', express.static(path.join(application_root, 'app')));
     app.use(morgan('dev'));
+    //app.use(cookieParser()); // read cookies (needed for auth)
     app.use(bodyParser());
     app.use(methodOverride());
     app.use(errorHandler({ dumpExceptions: true, showStack: true }));
@@ -36,6 +40,7 @@ if ('development' == env) {
 
     app.use('/', express.static(path.join(application_root, 'dist')));
     app.use(morgan('dev'));
+    //app.use(cookieParser()); // read cookies (needed for auth)
     app.use(bodyParser());
     app.use(methodOverride());
     app.use(errorHandler({ dumpExceptions: true, showStack: true }));
@@ -55,7 +60,7 @@ var server = app.listen( port, ipaddr, function() {
 });
 
 // Connect to the database
-mongoose.connect('mongodb://db_user:frasklas@ds029630.mongolab.com:29630/portfoliodb');
+mongoose.connect(configDB.url);
 
 // Verify connection
 var db = mongoose.connection;
@@ -64,25 +69,15 @@ db.once('open', function callback () {
   console.log('yay!!');
 });
 
-// REGISTER GET, PUT AND DELETE ROUTES for a activities below. This works since Express 4.0.0
-// Call out HTTP verbs on the route() method. route() method provides an instance of Route.
-app.route('/near-activities')
+// pass in passport for configuration
+require('./config/passport')(passport);
 
-	// Get a single message by id
-	.get(function(request, response) {
+app.use(session({ secret: 'iloveacteasy' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 
-      return Activity.find({
-          loc: {
-              $geoWithin: {
-                  $centerSphere: [
-                      [16.3577567, 56.6775846], 2/6371]
-              }
-          }
-      }, function(err, activities) {
 
-          return response.send(activities);
-      });
-	});
+require('./routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 
 

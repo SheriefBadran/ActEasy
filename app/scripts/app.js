@@ -30,7 +30,7 @@ angular
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html'
+        templateUrl: 'views/login.html'
       })
       .when('/about', {
         templateUrl: 'views/about.html',

@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var Activity = require('./../models/activity');
 var userSchema = require('./../models/user');
 var User = mongoose.model('User', userSchema);
+var evaluateActivities = require('./../priorityAlgorithm.js');
 var options = {};
 module.exports = function(app) {
 
@@ -86,8 +87,8 @@ module.exports = function(app) {
   // =====================================
   // MONGO DB geospatial query
   app.get('/near-activities', function (req, res) {
-    console.log(req.param('lon'));
-    console.log(req.weather);
+    //console.log(req.param('lon'));
+    //console.log(req.weather);
 
     Activity.find({
       loc: {
@@ -98,128 +99,13 @@ module.exports = function(app) {
       }
     }, function(err, activities) {
 
-      for (var i = 0, max = activities.length; i < max; i++) {
+      var evaluatedActivities = evaluateActivities(activities, req.weather);
 
-        //console.log(activities[i].priorityref);
-        //console.log(activities[i].name);
-        //console.log(typeof activities[i]);
-        activities[i].score = 0;
-        // TODO: The algorithm has many repeating chunks of code. Refactor!
-        // TODO: The algorithm should be encapsulated into a node module.
-        if (!activities[i].indoors) {
+      for (var i = 0, max = evaluatedActivities.length; i < max; i++) {
 
-          // ================================
-          // TEMPERATURE ====================
-          // ================================
-          // If outdoor temperature is within the optimal open-domain, assign high score value (8) to the activity.
-          if ((activities[i].priorityref.t.optmin <= req.weather.t &&
-               activities[i].priorityref.t.optmax >= req.weather.t) ||
-              (activities[i].priorityref.t.optmin === 0 &&
-               activities[i].priorityref.t.optmax === 0 &&
-               req.weather.t === 0)) {
-
-            activities[i].score += 8;
-          }
-
-          // If the outdoor temperature is within the open-domain between optimal max and absolute max or optimal min and absolute min,
-          // assign intermediate score (3) to the activity.
-          else if (activities[i].priorityref.t.min <= req.weather.t &&
-                   activities[i].priorityref.t.max >= req.weather.t) {
-
-            activities[i].score += 3;
-          }
-
-          // ================================
-          // WIND VELOCITY ==================
-          // ================================
-          if ((activities[i].priorityref.ws.optmin <= req.weather.ws &&
-            activities[i].priorityref.ws.optmax >= req.weather.ws) ||
-            (activities[i].priorityref.ws.optmin === 0 &&
-            activities[i].priorityref.ws.optmax === 0 &&
-            req.weather.ws === 0)) {
-
-            activities[i].score += 8;
-          }
-
-          else if (activities[i].priorityref.ws.min <= req.weather.ws &&
-                   activities[i].priorityref.ws.max >= req.weather.ws) {
-
-            activities[i].score += 3;
-          }
-
-          // ================================
-          // PRECIPITATION - TOTAL ==========
-          // ================================
-          if ((activities[i].priorityref.pit.optmin <= req.weather.pit &&
-            activities[i].priorityref.pit.optmax >= req.weather.pit) ||
-            (activities[i].priorityref.pit.optmin === 0 &&
-            activities[i].priorityref.pit.optmax === 0 &&
-            req.weather.pit === 0)) {
-
-            activities[i].score += 8;
-          }
-
-          else if (activities[i].priorityref.pit.min <= req.weather.pit &&
-            activities[i].priorityref.pit.max >= req.weather.pit) {
-
-            activities[i].score += 3;
-          }
-
-          // ================================
-          // PRECIPITATION - SNOW ===========
-          // ================================
-          if ((activities[i].priorityref.pis.optmin <= req.weather.pis &&
-            activities[i].priorityref.pis.optmax >= req.weather.pis) ||
-            (activities[i].priorityref.pis.optmin === 0 &&
-            activities[i].priorityref.pis.optmax === 0 &&
-            req.weather.pis === 0)) {
-
-            activities[i].score += 8;
-          }
-
-          else if (activities[i].priorityref.pis.min <= req.weather.pis &&
-            activities[i].priorityref.pis.max >= req.weather.pis) {
-
-            activities[i].score += 3;
-          }
-        }
-
-        if (activities[i].indoors) {
-
-          if (activities[i].priorityref.always) {
-
-            activities[i].score += 1;
-          }
-
-          if (activities[i].priorityref.extremealways) {
-
-            activities[i].score += 3;
-          }
-
-          if (activities[i].priorityref.t.optmax >= req.weather.t) {
-
-            activities[i].score += 8;
-          }
-
-          if (activities[i].priorityref.ws.optmax >= req.weather.ws) {
-
-            activities[i].score += 8;
-          }
-
-          if (req.weather.pit > 0) {
-
-            activities[i].score += 1;
-          }
-
-          if (req.weather.pis > 0) {
-
-            activities[i].score += 2;
-          }
-        }
-
-        console.log(activities[i].score);
-
-      }
+        console.log(evaluatedActivities[i].name);
+        console.log(evaluatedActivities[i].score);
+      };
       res.send(activities);
     });
   });

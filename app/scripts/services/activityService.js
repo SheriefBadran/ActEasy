@@ -12,14 +12,15 @@ angular.module('services')
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     this.getActivities = function(pos){
-      console.log(pos);
+      console.log('lat: ' + pos.latitude);
+      console.log('lon: ' + pos.longitude);
       // http://localhost:8000/near-activities
       // http://easyact-portfolio80.rhcloud.com
       //return $http.get('http://localhost:8000/near-activities');
       return $http({
         url: 'http://localhost:8000/near-activities',
         method: "GET",
-        params: {lng: 1, lat: 2}
+        params: {lat: pos.latitude, lon: pos.longitude}
       });
     };
   }]);

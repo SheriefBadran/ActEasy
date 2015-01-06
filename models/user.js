@@ -6,13 +6,23 @@ var mongoose = require('mongoose');
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
-  google           : {
-    id           : String,
-    token        : String,
-    email        : String,
-    name         : String
+  google: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  },
+  weather: {
+    lat: Number,
+    lon: Number,
+    t: Number,    // air temperature (celsius)
+    ws: Number,   // wind velocity (m/s)
+    pit: Number,  // precipitation - total
+    pis: Number   // precipitation - snow
   }
 });
 
+// var UserModel = mongoose.model('User', userSchema);
+
 // create the model for users and expose it to our app
-module.exports = mongoose.model('User', userSchema);
+module.exports = userSchema;

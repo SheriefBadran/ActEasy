@@ -1,14 +1,42 @@
 /**
  * Created by sheriefbadran on 1/3/15.
  */
-mongoose        = require('mongoose');
+mongoose = require('mongoose');
 
 var Activity = mongoose.Schema({
   "name": String,
   "indoors": Boolean,
-  "activity-name": String,
+  "priorityref": {
+    "t": {
+      "optmin": Number,
+      "optmax": Number,
+      "min": Number,
+      "max": Number
+    },
+    "ws": {
+      "optmin": Number,
+      "optmax": Number,
+      "min": Number,
+      "max": Number
+    },
+    "pit": {
+      "optmin": Number,
+      "optmax": Number,
+      "min": Number,
+      "max": Number
+    },
+    "pis": {
+      "optmin": Number,
+      "optmax": Number,
+      "min": Number,
+      "max": Number
+    },
+    "always": Boolean,
+    "extremealways": Boolean
+  },
+  "activityname": String,
   "category": String,
-  "sub-category": String,
+  "subcategory": String,
   "description": String,
   "contact": {
     "tel": String,
@@ -17,14 +45,14 @@ var Activity = mongoose.Schema({
   },
   "price": Number,
   "booking": Boolean,
-  "booking-link": String,
+  "bookinglink": String,
   "limitations": String,
   "images": [],
   "thumbs": [],
   "reviews": [],
   "address": {
     "street": String,
-    "postal-code": String,
+    "postalcode": String,
     "city": String
   },
   "loc": []

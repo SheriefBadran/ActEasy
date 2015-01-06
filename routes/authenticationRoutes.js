@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
   // send to google to do the authentication
   // profile gets us basic user information including user name
   // email gets user email
-  // TODO: Check for other scopes.
+  // TODO: Check for other google scopes.
 
   app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 

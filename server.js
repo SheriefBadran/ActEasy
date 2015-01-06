@@ -21,6 +21,7 @@ var env = process.env.NODE_ENV || 'development';
 
 if ('development' == env) {
 
+    // Express.static is a static middleware pointing to client static files directory.
     app.use('/', express.static(path.join(application_root, 'app')));
     app.use(morgan('dev'));
     //app.use(cookieParser()); // read cookies (needed for auth)
@@ -38,6 +39,7 @@ if ('development' == env) {
 
 } else {
 
+    // Express.static is a static middleware pointing to client static files directory.
     app.use('/', express.static(path.join(application_root, 'dist')));
     app.use(morgan('dev'));
     //app.use(cookieParser()); // read cookies (needed for auth)
@@ -76,8 +78,9 @@ app.use(session({ secret: 'iloveacteasy' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-require('./routes/activityRouts.js')(app); // load authentication routes and pass in our app and fully configured passport
+
 require('./routes/authenticationRoutes.js')(app, passport); // load authentication routes and pass in our app and fully configured passport
+require('./routes/activityRouts.js')(app); // load authentication routes and pass in our app and fully configured passport
 
 
 

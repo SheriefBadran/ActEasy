@@ -34,6 +34,7 @@ var Activity = mongoose.Schema({
     "always": Boolean,
     "extremealways": Boolean
   },
+  "score": Number,
   "activityname": String,
   "category": String,
   "subcategory": String,

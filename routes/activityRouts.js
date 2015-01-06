@@ -68,6 +68,32 @@ module.exports = function(app) {
 
     User.findOne({'google.name': 'Sherief Badran'}, function (err, user) {
 
+      if (user.nextupdate < +new Date()) {
+
+        request.get(options, function (error, response, body) {
+
+          // Maybe cache to file here.
+          var weather = JSON.parse(body);
+
+          user.weather = {
+            lat: weather.lat,
+            lon: weather.lon,
+            t: weather.timeseries[3].t,
+            ws: weather.timeseries[3].ws,
+            pit: weather.timeseries[3].pit,
+            pis: weather.timeseries[3].pis
+          };
+
+          user.nextupdate = +new Date() + 3600000;
+
+          user.save();
+          console.log('Im done and also one hour has passed since last call to weather API.');
+
+          next();
+        });
+      }
+
+      console.log('Using cached weather data.');
       // Retrieve weather from database and assign to the request object
       req.weather = user.weather;
       next();
@@ -100,13 +126,7 @@ module.exports = function(app) {
     }, function(err, activities) {
 
       var evaluatedActivities = evaluateActivities(activities, req.weather);
-
-      for (var i = 0, max = evaluatedActivities.length; i < max; i++) {
-
-        console.log(evaluatedActivities[i].name);
-        console.log(evaluatedActivities[i].score);
-      };
-      res.send(activities);
+      res.send(evaluatedActivities);
     });
   });
 };

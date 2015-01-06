@@ -19,7 +19,8 @@ var userSchema = mongoose.Schema({
     ws: Number,   // wind velocity (m/s)
     pit: Number,  // precipitation - total
     pis: Number   // precipitation - snow
-  }
+  },
+  nextupdate: Number
 });
 
 // var UserModel = mongoose.model('User', userSchema);

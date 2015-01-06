@@ -4,12 +4,13 @@
 <div ng-controller="ActivityCtrl as activityCollection">
   <button class="btn btn default btn-sm" ng-click="activityCollection.showOutdoors = !activityCollection.showOutdoors">Toggle</button>
   <ul class="list-group">
-    <li class="list-group-item" ng-repeat="activity in activityCollection.activities" ng-hide="(activity.indoors && activityCollection.showOutdoors) ||
-                                                                                               (!activity.indoors && !activityCollection.showOutdoors)">
+    <li class="list-group-item"
+        ng-repeat="activity in activityCollection.activities | orderBy: '-score'">
+        <!--ng-hide="(activity.indoors && activityCollection.showOutdoors) || (!activity.indoors && !activityCollection.showOutdoors)">-->
       <activity item="activity"></activity>
-      <!--<header>-->
-        <!--<h4>{{activity.name}}</h4>-->
-      <!--</header>-->
+      <header>
+        <h4>{{activity.score + ' points'}}</h4>
+      </header>
     </li>
   </ul>
   <a href="//localhost:8000/logout" class="btn btn-default btn-sm">Logout</a>

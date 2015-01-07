@@ -28,6 +28,7 @@ angular.module('activities')
             .success(function (data) {
 
               store.activities = data;
+              console.log(data);
             });
         });
       });

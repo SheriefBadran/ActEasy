@@ -69,10 +69,15 @@ angular
           }
         }
       })
+      .when('/activities/:activityId', {
+        templateUrl: 'views/activity-detail.html',
+        controller: 'ActivityDetailCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
 
+    // Executed for statuscodes >= 300
     $httpProvider.interceptors.push(function ($q, $location) {
       return {
         responseError: function (rejection) {

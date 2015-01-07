@@ -1,0 +1,19 @@
+<div class="phone">
+    <div class="row">
+        <div class="col-md-4 vertical-align">
+            <img src="http://dummyimage.com/150x200/000/ffffff.png" class="img-responsive img-thumbnail center-block" alt="Responsive image">
+        </div>
+        <div class="col-md-8 col-sm-8">
+            <h4>{{activity.name}}</h4>
+            <p>{{activity.description}}</p>
+
+            <h5>Kontakt</h5>
+            <!--<p>{{"Adress: " + activity.contact.address}}</p>-->
+            <p>{{"Telefon: " + activity.contact.tel}}</p>
+            <a ng-href = "{{activity.contact.website}}" target="_blank">{{activity.contact.website}}</a>
+            <div>
+                <a ng-href="{{activity.bookinglink}}" class="btn btn-success" ng-show="activity.booking" target="_blank">Boka aktivitet</a>
+            </div>
+        </div>
+    </div>
+</div>

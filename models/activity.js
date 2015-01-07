@@ -5,6 +5,7 @@ mongoose = require('mongoose');
 
 var Activity = mongoose.Schema({
   "name": String,
+  "urlextensionid": String,
   "indoors": Boolean,
   "priorityref": {
     "t": {
@@ -61,4 +62,4 @@ var Activity = mongoose.Schema({
 
 Activity.index({loc: '2dsphere'});
 
-module.exports = mongoose.model('Activity', Activity);
+module.exports = Activity;

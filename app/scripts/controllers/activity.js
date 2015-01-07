@@ -8,7 +8,7 @@
  * Controller of the ActEasy App
  */
 angular.module('activities')
-  .controller('ActivityListCtrl', ['activityService', 'weatherService', '$q', '$scope', function (activityService, weatherService, $q, $scope) {
+  .controller('ActivityListCtrl', ['activityService', '$q', function (activityService, $q) {
 
     // bind the data to be accessed from directives.
     var defer = $q.defer();
@@ -36,4 +36,18 @@ angular.module('activities')
     defer.resolve();
 
     // TODO: 7. $http.get('http://localhost:8000/activities') to get all activities and save all to local storage categorized indoors/outdoors.
+  }])
+
+  .controller('ActivityDetailCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
+
+    console.log($routeParams);
+
+
+    $scope.activityId = $routeParams.activityId;
+
+    $http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
+      .success(function (activity) {
+
+        $scope.activity = activity;
+      });
   }]);

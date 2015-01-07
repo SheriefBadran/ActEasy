@@ -3,7 +3,8 @@
  */
 var request = require('request');
 var mongoose = require('mongoose');
-var Activity = require('./../models/activity');
+var activitySchema = require('./../models/activity');
+var Activity = mongoose.model('Activity', activitySchema);
 var userSchema = require('./../models/user');
 var User = mongoose.model('User', userSchema);
 var evaluateActivities = require('./../priorityAlgorithm.js');
@@ -12,100 +13,54 @@ module.exports = function(app) {
 
   app.use(function (req, res, next) {
 
-    // http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/version/1/geopoint/lat/56.6863052/lon/16.351642599999998/data.json
-    // http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/version/1/geopoint/lat/56.689/lon/16.351/data.json
-    if (!req.param('lat')) {
+    if (req.param('lat') && req.param('lon')) {
 
-      console.log('ignore undefined');
+      var lat = +(Math.round(parseFloat(req.param('lat')) + "e+2") + "e-2");
+      var lon = +(Math.round(parseFloat(req.param('lon')) + "e+2") + "e-2");
+
+      options.url = 'http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/version/1/geopoint/lat/'+lat+'/lon/'+lon+'/data.json';
+      console.log(options.url);
+      options.headers = {
+        'User-Agent': 'Sherief Badran - student linneus university'
+      };
+
+      User.findOne({'google.name': 'Sherief Badran'}, function (err, user) {
+
+        if (user.nextupdate < +new Date()) {
+
+          request.get(options, function (error, response, body) {
+
+            // Maybe cache to file here.
+            var weather = JSON.parse(body);
+
+            user.weather = {
+              lat: weather.lat,
+              lon: weather.lon,
+              t: weather.timeseries[3].t,
+              ws: weather.timeseries[3].ws,
+              pit: weather.timeseries[3].pit,
+              pis: weather.timeseries[3].pis
+            };
+
+            user.nextupdate = +new Date() + 3600000;
+
+            user.save();
+            console.log('Im done and also one hour has passed since last call to weather API.');
+
+            next();
+          });
+        }
+
+        console.log('Using cached weather data.');
+        // Retrieve weather from database and assign to the request object
+        req.weather = user.weather;
+        next();
+      });
+    }
+    else {
+
       next();
     }
-
-    var lat = +(Math.round(parseFloat(req.param('lat')) + "e+2") + "e-2");
-    var lon = +(Math.round(parseFloat(req.param('lon')) + "e+2") + "e-2");
-
-    options.url = 'http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/version/1/geopoint/lat/'+lat+'/lon/'+lon+'/data.json';
-    console.log(options.url);
-    options.headers = {
-      'User-Agent': 'Sherief Badran - student linneus university'
-    };
-
-    //User.findOne({'google.name': 'Sherief Badran'}, function (err, user) {
-    //  user.weather = {
-    //    wind: '1.2',
-    //    temp: '15'
-    //  };
-    //  user.save();
-    //});
-
-
-    //request.get(options, function (error, response, body) {
-    //
-    //  // Maybe cache to file here.
-    //  var weather = JSON.parse(body);
-    //  User.findOne({'google.name': 'Sherief Badran'}, function (err, user) {
-    //    user.weather = {
-    //      lat: weather.lat,
-    //      lon: weather.lon,
-    //      t: weather.timeseries[3].t,
-    //      ws: weather.timeseries[3].ws,
-    //      pit: weather.timeseries[3].pit,
-    //      pis: weather.timeseries[3].pis
-    //    };
-    //    user.save();
-    //  });
-    //
-    //  console.log(typeof weather.lat);
-    //  console.log(typeof weather.lon);
-    //  console.log(typeof weather.timeseries[3].t);
-    //  console.log(typeof weather.timeseries[3].ws);
-    //  console.log(typeof weather.timeseries[3].pit);
-    //  console.log(typeof weather.timeseries[3].pis);
-    //
-    //  console.log('Im done');
-    //
-    //  next();
-    //});
-
-    User.findOne({'google.name': 'Sherief Badran'}, function (err, user) {
-
-      if (user.nextupdate < +new Date()) {
-
-        request.get(options, function (error, response, body) {
-
-          // Maybe cache to file here.
-          var weather = JSON.parse(body);
-
-          user.weather = {
-            lat: weather.lat,
-            lon: weather.lon,
-            t: weather.timeseries[3].t,
-            ws: weather.timeseries[3].ws,
-            pit: weather.timeseries[3].pit,
-            pis: weather.timeseries[3].pis
-          };
-
-          user.nextupdate = +new Date() + 3600000;
-
-          user.save();
-          console.log('Im done and also one hour has passed since last call to weather API.');
-
-          next();
-        });
-      }
-
-      console.log('Using cached weather data.');
-      // Retrieve weather from database and assign to the request object
-      req.weather = user.weather;
-      next();
-    });
-
-    //request.get({uri: options.url}, function (error, response, body) {
-    //
-    //  console.log(body);
-    //  console.log('Im done');
-    //  next();
-    //});
-    //next();
   });
 
   // =====================================
@@ -115,7 +70,6 @@ module.exports = function(app) {
   app.get('/near-activities', function (req, res) {
     //console.log(req.param('lon'));
     //console.log(req.weather);
-
     Activity.find({
       loc: {
         $geoWithin: {
@@ -129,4 +83,14 @@ module.exports = function(app) {
       res.send(evaluatedActivities);
     });
   });
+
+  app.get('/activity-details', function (req, res) {
+
+    Activity.findOne({'urlextensionid': req.param('name')}, function (err, activity) {
+
+      res.send(activity);
+    });
+  });
+
+
 };

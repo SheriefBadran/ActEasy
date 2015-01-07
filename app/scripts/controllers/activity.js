@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name scaffoldTestApp.controller:ActivityCtrl
+ * @name ActEasy.controller:ActivityListCtrl
  * @description
- * # ActivityCtrl
- * Controller of the scaffoldTestApp
+ * # ActivityListCtrl
+ * Controller of the ActEasy App
  */
 angular.module('activities')
-  .controller('ActivityCtrl', ['activityService', 'weatherService', '$q', '$scope', function (activityService, weatherService, $q, $scope) {
+  .controller('ActivityListCtrl', ['activityService', 'weatherService', '$q', '$scope', function (activityService, weatherService, $q, $scope) {
 
     // bind the data to be accessed from directives.
     var defer = $q.defer();

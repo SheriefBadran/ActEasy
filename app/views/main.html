@@ -1,9 +1,9 @@
-<div ng-controller="ActivityCtrl as activityCollection">
-  <button class="btn btn default btn-sm" ng-click="activityCollection.showOutdoors = !activityCollection.showOutdoors">Toggle</button>
+<div ng-controller="ActivityListCtrl as activitiesCtrl">
+  <button class="btn btn default btn-sm" ng-click="activitiesCtrl.showOutdoors = !activitiesCtrl.showOutdoors">Toggle</button>
   <ul class="list-group">
     <li class="list-group-item"
-        ng-repeat="activity in activityCollection.activities | orderBy: '-score'">
-        <!--ng-hide="(activity.indoors && activityCollection.showOutdoors) || (!activity.indoors && !activityCollection.showOutdoors)">-->
+        ng-repeat="activity in activitiesCtrl.activities | orderBy: '-score'">
+        <!--ng-hide="(activity.indoors && activitiesCtrl.showOutdoors) || (!activity.indoors && !activitiesCtrl.showOutdoors)">-->
       <activity item="activity"></activity>
       <header>
         <h4>{{activity.score + ' points'}}</h4>

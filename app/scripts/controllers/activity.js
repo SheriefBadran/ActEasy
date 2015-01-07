@@ -40,11 +40,6 @@ angular.module('activities')
 
   .controller('ActivityDetailCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
 
-    console.log($routeParams);
-
-
-    $scope.activityId = $routeParams.activityId;
-
     $http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
       .success(function (activity) {
 

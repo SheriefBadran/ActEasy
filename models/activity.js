@@ -1,7 +1,7 @@
 /**
  * Created by sheriefbadran on 1/3/15.
  */
-mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
 var Activity = mongoose.Schema({
   "name": String,

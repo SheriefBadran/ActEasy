@@ -46,7 +46,6 @@ angular.module('activities')
           activityService.getActivities(store.pos)
             .success(function (data) {
 
-              $scope.activity = data;
               store.activities = data;
               console.log(data);
             });
@@ -68,6 +67,7 @@ angular.module('activities')
 
 
     $http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
+    //$http.get('http://easyact-portfolio80.rhcloud.com/activity-details?name=' + $routeParams.activityId)
       .success(function (activity) {
 
         $scope.activity = activity;

@@ -72,14 +72,14 @@ db.once('open', function callback () {
 });
 
 // pass in passport for configuration
-require('./config/passport')(passport);
+//require('./config/passport')(passport);
+//
+//app.use(session({ secret: 'iloveacteasy' })); // session secret
+//app.use(passport.initialize());
+//app.use(passport.session()); // persistent login sessions
 
-app.use(session({ secret: 'iloveacteasy' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
 
-
-require('./routes/authenticationRoutes.js')(app, passport); // load authentication routes and pass in our app and fully configured passport
+//require('./routes/authenticationRoutes.js')(app, passport); // load authentication routes and pass in our app and fully configured passport
 require('./routes/activityRouts.js')(app); // load authentication routes and pass in our app and fully configured passport
 
 

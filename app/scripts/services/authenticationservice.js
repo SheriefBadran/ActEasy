@@ -13,5 +13,6 @@ angular.module('services')
     this.authenticate = function(){
 
       return $http.get('http://localhost:8000/authenticate');
+      //return $http.get('http://easyact-portfolio80.rhcloud.com/authenticate');
     };
   }]);

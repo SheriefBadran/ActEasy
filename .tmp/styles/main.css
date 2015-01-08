@@ -4,6 +4,11 @@ body {
   padding-bottom: 20px;
 }
 
+.angular-google-map-container {
+
+  height: 400px;
+}
+
 .vertical-align {
   display: -webkit-flex;
   display: flex;

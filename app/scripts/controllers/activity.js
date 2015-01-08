@@ -8,14 +8,33 @@
  * Controller of the ActEasy App
  */
 angular.module('activities')
-  .controller('ActivityListCtrl', ['activityService', '$q', function (activityService, $q) {
+  .controller('ActivityListCtrl', ['activityService', '$q', '$scope', function (activityService, $q, $scope) {
 
     // bind the data to be accessed from directives.
     var defer = $q.defer();
     var store = this;
     store.activities = [];
-    store.showOutdoors = false;
+    store.showOutdoors = true;
+    store.showIndoors = true;
     store.pos = [];
+
+    store.showOutdoorsOnly = function () {
+
+      store.showOutdoors = true;
+      store.showIndoors = false;
+    };
+
+    store.showIndoorsOnly = function () {
+
+      store.showOutdoors = false;
+      store.showIndoors = true;
+    };
+
+    store.showAll = function () {
+
+      store.showOutdoors = true;
+      store.showIndoors = true;
+    };
 
     defer.promise
       // First retrieve user position.
@@ -27,6 +46,7 @@ angular.module('activities')
           activityService.getActivities(store.pos)
             .success(function (data) {
 
+              $scope.activity = data;
               store.activities = data;
               console.log(data);
             });
@@ -40,9 +60,52 @@ angular.module('activities')
 
   .controller('ActivityDetailCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
 
+    var map;
+    var directionsDisplay;
+    var currentPosition;
+    var directionsService = new google.maps.DirectionsService();
+    var mapOptions = {};
+
+
     $http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
       .success(function (activity) {
 
         $scope.activity = activity;
+        $scope.userObj = {
+          username: "name"
+        };
+      })
+      .then(function () {
+
+        navigator.geolocation.getCurrentPosition(function (pos) {
+
+          directionsDisplay = new google.maps.DirectionsRenderer();
+          currentPosition = new google.maps.LatLng(pos.latitude, pos.longitude);
+
+          mapOptions.zoom = 7;
+          mapOptions.center = currentPosition;
+
+          map = new google.maps.Map(document.getElementById('map'), mapOptions);
+          directionsDisplay.setMap(map);
+          calculateRoute(pos);
+        });
       });
+
+    var calculateRoute = function (pos) {
+
+      var start = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      var end = $scope.activity.address.street + " " + $scope.activity.address.postalcode + ", " + $scope.activity.address.city;
+      var request = {
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode.DRIVING
+      };
+      directionsService.route(request, function (response, status) {
+
+        if (status === google.maps.DirectionsStatus.OK) {
+
+          directionsDisplay.setDirections(response);
+        }
+      })
+    };
   }]);

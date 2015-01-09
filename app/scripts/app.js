@@ -51,24 +51,24 @@ angular
         }
       })
       .when('/activities', {
-        templateUrl: 'views/main.html'
-        //resolve: {
-        //  view: function ($q, $http) {
-        //
-        //    var defer = $q.defer();
-        //
-        //    $http.get('http://easyact-portfolio80.rhcloud.com/authenticate').success(function(response) {
-        //    //$http.get('http://localhost:8000/authenticate').success(function(response) {
-        //
-        //        console.log(response);
-        //        defer.resolve();
-        //        return defer.promise;
-        //    });
-        //
-        //    defer.reject();
-        //    //defer.resolve();
-        //  }
-        //}
+        templateUrl: 'views/main.html',
+        resolve: {
+          view: function ($q, $http) {
+
+            var defer = $q.defer();
+
+            //$http.get('http://easyact-portfolio80.rhcloud.com/authenticate').success(function(response) {
+            $http.get('http://localhost:8000/authenticate').success(function(response) {
+
+                console.log(response);
+                defer.resolve();
+                return defer.promise;
+            });
+
+            defer.reject();
+            //defer.resolve();
+          }
+        }
       })
       .when('/activities/:activityId', {
         templateUrl: 'views/activity-detail.html',

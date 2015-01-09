@@ -137,7 +137,7 @@ angular.module('actEasy')
  * Controller of the ActEasy App
  */
 angular.module('activities')
-  .controller('ActivityListCtrl', ['activityService', '$q', '$scope', function (activityService, $q, $scope) {
+  .controller('ActivityListCtrl', ['activityService', '$q', function (activityService, $q) {
 
     // bind the data to be accessed from directives.
     var defer = $q.defer();
@@ -145,6 +145,7 @@ angular.module('activities')
     store.activities = [];
     store.showOutdoors = true;
     store.showIndoors = true;
+
     store.pos = [];
 
     store.showOutdoorsOnly = function () {
@@ -164,6 +165,8 @@ angular.module('activities')
       store.showOutdoors = true;
       store.showIndoors = true;
     };
+
+
 
     defer.promise
       // First retrieve user position.
@@ -344,43 +347,3 @@ angular.module('services')
       return $http.get('http://easyact-portfolio80.rhcloud.com/authenticate');
     };
   }]);
-
-'use strict';
-
-/**
- * @ngdoc directive
- * @name ActEasy.directive:directionsMap
- * @description
- * # directionsMap
- */
-angular.module('activities')
-  .directive('directionsMap', ['googleApiService', function (google) {
-    return {
-      //templateUrl: "../../partials/activity-section.html",
-      template: "<div></div>",
-      restrict: 'E',
-      scope: {
-        activity: "="
-      },
-      link: function (scope) {
-
-        console.log(scope);
-        console.log(scope.activity);
-      }
-    };
-  }]);
-
-'use strict';
-
-/**
- * @ngdoc service
- * @name scaffoldTestApp.googleApiService
- * @description
- * # googleApiService
- * Service in the scaffoldTestApp.
- */
-angular.module('services')
-  .service('googleApiService', function () {
-
-    return google;
-  });

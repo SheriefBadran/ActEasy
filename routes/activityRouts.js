@@ -32,17 +32,16 @@ module.exports = function(app) {
 
             // Maybe cache to file here.
             var weather = JSON.parse(body);
-
             user.weather = {
               lat: weather.lat,
               lon: weather.lon,
-              t: weather.timeseries[3].t,
-              ws: weather.timeseries[3].ws,
-              pit: weather.timeseries[3].pit,
-              pis: weather.timeseries[3].pis
+              t: weather.timeseries[6].t,
+              ws: weather.timeseries[6].ws,
+              pit: weather.timeseries[6].pit,
+              pis: weather.timeseries[6].pis
             };
 
-            user.nextupdate = +new Date() + 3600000;
+            user.nextupdate = +new Date() + 600000;
 
             user.save();
             console.log('Im done and also one hour has passed since last call to weather API.');
@@ -52,6 +51,7 @@ module.exports = function(app) {
         }
 
         console.log('Using cached weather data.');
+        console.log(user.weather);
         // Retrieve weather from database and assign to the request object
         req.weather = user.weather;
         next();
@@ -61,7 +61,6 @@ module.exports = function(app) {
 
       next();
     }
-    //next();
   });
 
   // =====================================
@@ -70,6 +69,8 @@ module.exports = function(app) {
   // MONGO DB geospatial query
   app.get('/near-activities', function (req, res) {
 
+    console.log("lat: " + req.param('lat'));
+    console.log("lon: " + req.param('lon'));
     Activity.find({
       loc: {
         $geoWithin: {

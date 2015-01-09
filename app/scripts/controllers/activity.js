@@ -8,7 +8,7 @@
  * Controller of the ActEasy App
  */
 angular.module('activities')
-  .controller('ActivityListCtrl', ['activityService', '$q', '$scope', function (activityService, $q, $scope) {
+  .controller('ActivityListCtrl', ['activityService', '$q', function (activityService, $q) {
 
     // bind the data to be accessed from directives.
     var defer = $q.defer();
@@ -16,6 +16,7 @@ angular.module('activities')
     store.activities = [];
     store.showOutdoors = true;
     store.showIndoors = true;
+
     store.pos = [];
 
     store.showOutdoorsOnly = function () {
@@ -35,6 +36,8 @@ angular.module('activities')
       store.showOutdoors = true;
       store.showIndoors = true;
     };
+
+
 
     defer.promise
       // First retrieve user position.

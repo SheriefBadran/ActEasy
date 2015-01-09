@@ -21,32 +21,55 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="container">
-      <div class="header">
-        <!--<p>{{activity.activities}}</p>-->
-        <!--<p>{{activity.products[0].name}}</p>-->
-        <!--<p>{{app.weather}}</p>-->
-        <!--<tabgroup class="nav">-->
-          <!--<tab title="Beskrivning">-->
-            <!--<product-description item="activity.activities[0]"></product-description>-->
-          <!--</tab>-->
-          <!--<tab title="Detaljer">-->
-            <!--<div product-specs item="activity.activities[0]"></div>-->
-          <!--</tab>-->
-          <!--<tab title="Omdömen">-->
-            <!--<product-reviews reviewed-product="activity.activities[0]"></product-reviews>-->
-          <!--</tab>-->
-        <!--</tabgroup>-->
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">Act Easy</h3>
+    <!-- APPLICATION NAVBAR -->
+    <div class="navbar navbar-default navbar-fixed-top">
+
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" ng-href="#">
+            Easyact
+          </a>
+          <button class="navbar-toggle" data-target="#navbar-main" data-toggle="collapse" type="button" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div id="navbar-main" class="navbar-collapse collapse in" aria-expanded="false" style="">
+          <ul class="nav navbar-nav">
+            <li>
+              <a ng-href="#/about">Om Easyact</a>
+            </li>
+            <li>
+              <a ng-href="#/contact">Kontakt</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="//localhost:8000/logout">Logga ut</a>
+              <!--<a href="//http://easyact-portfolio80.rhcloud.com/logout">Logga ut</a>-->
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <div ng-view="">
+    </div>
+    <!-- NAVBAR END -->
+
+
+      <!-- Add your site or application content here -->
+    <div class="container">
+      <!--<div class="header">-->
+        <!--<ul class="nav nav-pills pull-right">-->
+          <!--<li class="active"><a ng-href="#">Home</a></li>-->
+          <!--<li><a ng-href="#/about">About</a></li>-->
+          <!--<li><a ng-href="#">Contact</a></li>-->
+        <!--</ul>-->
+        <!--<h3 class="text-muted">Act Easy</h3>-->
+      <!--</div>-->
+
+      <div id="main-content" ng-view="">
       </div>
 
       <div class="footer">
@@ -87,7 +110,6 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
     <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
@@ -103,8 +125,7 @@
         <script src="scripts/services/activityService.js"></script>
         <script src="scripts/controllers/view.js"></script>
         <script src="scripts/services/authenticationservice.js"></script>
-        <script src="scripts/directives/directionsmap.js"></script>
-        <script src="scripts/services/googleapiservice.js"></script>
         <!-- endbuild -->
+    <noscript>Your browser does not support JavaScript!</noscript>
 </body>
 </html>

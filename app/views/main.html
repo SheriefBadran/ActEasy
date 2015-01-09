@@ -1,7 +1,10 @@
-<div ng-controller="ActivityListCtrl as activitiesCtrl">
-  <button class="btn btn default btn-sm" ng-click="activitiesCtrl.showAll()">Alla</button>
-  <button class="btn btn default btn-sm" ng-click="activitiesCtrl.showIndoorsOnly()">Inomhus</button>
-  <button class="btn btn default btn-sm" ng-click="activitiesCtrl.showOutdoorsOnly()">Utomhus</button>
+<div id="activities-container" ng-controller="ActivityListCtrl as activitiesCtrl">
+  <!-- TODO: Bad implementation for tabs, refactor and create a tab-group directive. -->
+  <div ng-init="tab=1">
+    <button ng-class="{ active: tab===1 }" class="btn btn default btn-sm" ng-click="activitiesCtrl.showAll(); tab=1">Alla</button>
+    <button ng-class="{ active: tab===2 }" class="btn btn default btn-sm" ng-click="activitiesCtrl.showIndoorsOnly(); tab=2">Inomhus</button>
+    <button ng-class="{ active: tab===3 }" class="btn btn default btn-sm" ng-click="activitiesCtrl.showOutdoorsOnly(); tab=3">Utomhus</button>
+  </div>
   <ul class="list-group">
     <li class="list-group-item"
         ng-repeat="activity in activitiesCtrl.activities | orderBy: '-score'"
@@ -12,6 +15,6 @@
       </header>
     </li>
   </ul>
-  <a href="//localhost:8000/logout" class="btn btn-default btn-sm">Logout</a>
+  <!--<a href="//localhost:8000/logout" class="btn btn-default btn-sm">Logout</a>-->
 </div>
 <!--<activities ng-transclude=""><activity></activity></activities>-->

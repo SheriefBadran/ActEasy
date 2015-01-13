@@ -59,25 +59,30 @@ angular
             console.log('in load data');
             var defer = $q.defer();
 
-            $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
+
+            console.log(navigator.onLine);
+            if (navigator.onLine) {
+
+              $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
               //$http.get('http://localhost:8000/authenticate')
-              .success(function(response, status) {
+                .success(function(response, status) {
 
-                defer.resolve();
-              })
-              .error(function(response) {
-
-                // if response is null, server is down.
-                if (response === null) {
-
+                  localStorage.setItem('user', JSON.stringify(response.google));
                   defer.resolve();
-                }
-                else {
+                })
+                .error(function(response) {
 
-                  defer.reject();
-                }
-              });
+                    defer.reject("Du måste vara inloggad för att se aktivitetslistan");
+                });
+            }
+            else {
 
+              console.log("server down");
+              //$rootScope.offline = true;
+
+              //defer.resolve();
+              defer.reject("offline");
+            }
 
             return defer.promise;
           }
@@ -108,6 +113,18 @@ angular
 
     $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
 
-      $location.path('/');
+      if (rejection === "offline") {
+
+        console.log("YES!!");
+        $scope.activities = JSON.parse(localStorage.getItem('activities'));
+        $scope.offline = true;
+      }
+      else {
+
+        $scope.showResponse = true;
+        $scope.loginResponse = rejection;
+        $location.path('/');
+      }
+
     })
   });

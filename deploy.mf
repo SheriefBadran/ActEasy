@@ -1,0 +1,13 @@
+CACHE MANIFEST
+dist/index.html
+dist/partials/activity-section.html
+dist/partials/product-description.html
+dist/views/about.html
+dist/views/activity-detail.html
+dist/views/login.html
+dist/views/main.html
+dist/styles/vendor.cabc70f2.css
+dist/styles/main.56f47750.css
+dist/scripts/oldieshim.76f279db.js
+dist/scripts/scripts.ed923442.js
+dist/scripts/vendor.9ceba24f.js

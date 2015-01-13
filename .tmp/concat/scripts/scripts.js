@@ -59,25 +59,30 @@ angular
             console.log('in load data');
             var defer = $q.defer();
 
-            $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
+
+            console.log(navigator.onLine);
+            if (navigator.onLine) {
+
+              $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
               //$http.get('http://localhost:8000/authenticate')
-              .success(function(response, status) {
+                .success(function(response, status) {
 
-                defer.resolve();
-              })
-              .error(function(response) {
-
-                // if response is null, server is down.
-                if (response === null) {
-
+                  localStorage.setItem('user', JSON.stringify(response.google));
                   defer.resolve();
-                }
-                else {
+                })
+                .error(function(response) {
 
-                  defer.reject();
-                }
-              });
+                    defer.reject("Du måste vara inloggad för att se aktivitetslistan");
+                });
+            }
+            else {
 
+              console.log("server down");
+              //$rootScope.offline = true;
+
+              //defer.resolve();
+              defer.reject("offline");
+            }
 
             return defer.promise;
           }]
@@ -108,7 +113,19 @@ angular
 
     $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
 
-      $location.path('/');
+      if (rejection === "offline") {
+
+        console.log("YES!!");
+        $scope.activities = JSON.parse(localStorage.getItem('activities'));
+        $scope.offline = true;
+      }
+      else {
+
+        $scope.showResponse = true;
+        $scope.loginResponse = rejection;
+        $location.path('/');
+      }
+
     })
   }]);
 
@@ -158,7 +175,7 @@ angular.module('actEasy')
  */
 var activities = angular.module('activities');
 
-var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityService', '$q', function (activityService, $q) {
+var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityService', '$q', '$scope', function (activityService, $q, $scope) {
 
   // bind the data to be accessed from directives.
   var defer = $q.defer();
@@ -166,6 +183,7 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
   store.activities = [];
   store.showOutdoors = true;
   store.showIndoors = true;
+  store.user = JSON.parse(localStorage.getItem('user'));
 
   store.pos = [];
 
@@ -196,18 +214,29 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
       navigator.geolocation.getCurrentPosition(function (pos) {
 
         store.pos = pos.coords;
-        activityService.getActivities(store.pos)
-          .success(function (data) {
+        console.log(navigator.onLine);
+        if (navigator.onLine) {
 
-            store.activities = data;
-            console.log(data);
-          });
+          activityService.getActivities(store.pos)
+            .success(function (data) {
+
+              store.activities = data;
+              //$scope.activities = data;
+              localStorage.setItem('activities', JSON.stringify(data));
+              console.log(JSON.parse(localStorage.getItem('activities')));
+              console.log(data);
+            });
+        }
+        else {
+          console.log("do the offline work!");
+          console.log(JSON.parse(localStorage.getItem('activities')));
+          store.activities = JSON.parse(localStorage.getItem('activities'));
+        }
       });
     });
 
   defer.resolve();
 
-  // TODO: 7. $http.get('http://localhost:8000/activities') to get all activities and save all to local storage categorized indoors/outdoors.
 }]);
 
 var ActivityDetailCtrl = activities.controller('ActivityDetailCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {

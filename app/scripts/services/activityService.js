@@ -17,8 +17,8 @@ angular.module('services')
 
       //return $http.get('http://localhost:8000/near-activities');
       return $http({
-        //url: 'http://localhost:8000/near-activities',
-        url: 'http://easyact-portfolio80.rhcloud.com/near-activities',
+        url: 'http://localhost:8000/near-activities',
+        //url: 'http://easyact-portfolio80.rhcloud.com/near-activities',
         method: "GET",
         params: {lat: pos.latitude, lon: pos.longitude}
       });

@@ -82,8 +82,8 @@ var ActivityDetailCtrl = activities.controller('ActivityDetailCtrl', ['$scope', 
   var mapOptions = {};
 
 
-  //$http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
-  $http.get('http://easyact-portfolio80.rhcloud.com/activity-details?name=' + $routeParams.activityId)
+  $http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
+  //$http.get('http://easyact-portfolio80.rhcloud.com/activity-details?name=' + $routeParams.activityId)
     .success(function (activity) {
 
       $scope.activity = activity;

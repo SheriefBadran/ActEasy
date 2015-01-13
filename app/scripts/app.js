@@ -63,8 +63,8 @@ angular
             console.log(navigator.onLine);
             if (navigator.onLine) {
 
-              $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
-              //$http.get('http://localhost:8000/authenticate')
+              //$http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
+              $http.get('http://localhost:8000/authenticate')
                 .success(function(response, status) {
 
                   localStorage.setItem('user', JSON.stringify(response.google));

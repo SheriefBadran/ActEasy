@@ -78,10 +78,11 @@ angular
             else {
 
               console.log("server down");
+              localStorage.setItem('offlineMessage', "Du är inte ansluten till internet.");
               //$rootScope.offline = true;
 
-              //defer.resolve();
-              defer.reject("offline");
+              defer.resolve();
+              //defer.reject("offline");
             }
 
             return defer.promise;
@@ -110,6 +111,8 @@ angular
     //})
   })
   .controller('AppCtrl', function ($scope, $rootScope, $location) {
+
+    $scope.offlineMessage = localStorage.getItem('offlineMessage');
 
     $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
 

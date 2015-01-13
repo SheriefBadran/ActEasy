@@ -31,7 +31,7 @@ angular
   .config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html'
+        templateUrl: 'views/login.html'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
@@ -52,21 +52,34 @@ angular
       })
       .when('/activities', {
         templateUrl: 'views/main.html',
+        controller: 'ActivityListCtrl',
         resolve: {
-          view: ["$q", "$http", function ($q, $http) {
+          loadData: ["$q", "$http", function ($q, $http) {
 
+            console.log('in load data');
             var defer = $q.defer();
 
-            $http.get('http://easyact-portfolio80.rhcloud.com/authenticate').success(function(response) {
-            //$http.get('http://localhost:8000/authenticate').success(function(response) {
+            $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
+              //$http.get('http://localhost:8000/authenticate')
+              .success(function(response, status) {
 
-                console.log(response);
                 defer.resolve();
-                return defer.promise;
-            });
+              })
+              .error(function(response) {
 
-            defer.reject();
-            //defer.resolve();
+                // if response is null, server is down.
+                if (response === null) {
+
+                  defer.resolve();
+                }
+                else {
+
+                  defer.reject();
+                }
+              });
+
+
+            return defer.promise;
           }]
         }
       })
@@ -79,17 +92,24 @@ angular
       });
 
     // Executed for statuscodes >= 300
-    $httpProvider.interceptors.push(["$q", "$location", function ($q, $location) {
-      return {
-        responseError: function (rejection) {
-          if (rejection.status === 401) {
-            console.log('NOT AUTHORIZED!');
-            $location.path('/');
-          }
-          return $q.reject(rejection);
-        }
-      }
-    }])
+    //$httpProvider.interceptors.push(function ($q, $location) {
+    //  return {
+    //    responseError: function (rejection) {
+    //      if (rejection.status === 401) {
+    //        console.log('NOT AUTHORIZED!');
+    //        $location.path('/');
+    //      }
+    //      return $q.reject(rejection);
+    //    }
+    //  }
+    //})
+  }])
+  .controller('AppCtrl', ["$scope", "$rootScope", "$location", function ($scope, $rootScope, $location) {
+
+    $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
+
+      $location.path('/');
+    })
   }]);
 
 'use strict';
@@ -136,112 +156,141 @@ angular.module('actEasy')
  * # ActivityListCtrl
  * Controller of the ActEasy App
  */
-angular.module('activities')
-  .controller('ActivityListCtrl', ['activityService', '$q', function (activityService, $q) {
+var activities = angular.module('activities');
 
-    // bind the data to be accessed from directives.
-    var defer = $q.defer();
-    var store = this;
-    store.activities = [];
+var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityService', '$q', function (activityService, $q) {
+
+  // bind the data to be accessed from directives.
+  var defer = $q.defer();
+  var store = this;
+  store.activities = [];
+  store.showOutdoors = true;
+  store.showIndoors = true;
+
+  store.pos = [];
+
+  store.showOutdoorsOnly = function () {
+
+    store.showOutdoors = true;
+    store.showIndoors = false;
+  };
+
+  store.showIndoorsOnly = function () {
+
+    store.showOutdoors = false;
+    store.showIndoors = true;
+  };
+
+  store.showAll = function () {
+
     store.showOutdoors = true;
     store.showIndoors = true;
-
-    store.pos = [];
-
-    store.showOutdoorsOnly = function () {
-
-      store.showOutdoors = true;
-      store.showIndoors = false;
-    };
-
-    store.showIndoorsOnly = function () {
-
-      store.showOutdoors = false;
-      store.showIndoors = true;
-    };
-
-    store.showAll = function () {
-
-      store.showOutdoors = true;
-      store.showIndoors = true;
-    };
+  };
 
 
 
-    defer.promise
-      // First retrieve user position.
-      .then(function () {
+  defer.promise
+    // First retrieve user position.
+    .then(function () {
 
-        navigator.geolocation.getCurrentPosition(function (pos) {
+      navigator.geolocation.getCurrentPosition(function (pos) {
 
-          store.pos = pos.coords;
-          activityService.getActivities(store.pos)
-            .success(function (data) {
+        store.pos = pos.coords;
+        activityService.getActivities(store.pos)
+          .success(function (data) {
 
-              store.activities = data;
-              console.log(data);
-            });
-        });
+            store.activities = data;
+            console.log(data);
+          });
       });
+    });
 
-    defer.resolve();
+  defer.resolve();
 
-    // TODO: 7. $http.get('http://localhost:8000/activities') to get all activities and save all to local storage categorized indoors/outdoors.
-  }])
+  // TODO: 7. $http.get('http://localhost:8000/activities') to get all activities and save all to local storage categorized indoors/outdoors.
+}]);
 
-  .controller('ActivityDetailCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
+var ActivityDetailCtrl = activities.controller('ActivityDetailCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
 
-    var map;
-    var directionsDisplay;
-    var currentPosition;
-    var directionsService = new google.maps.DirectionsService();
-    var mapOptions = {};
+  var map;
+  var directionsDisplay;
+  var currentPosition;
+  var directionsService = new google.maps.DirectionsService();
+  var mapOptions = {};
 
 
-    //$http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
-    $http.get('http://easyact-portfolio80.rhcloud.com/activity-details?name=' + $routeParams.activityId)
-      .success(function (activity) {
+  //$http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
+  $http.get('http://easyact-portfolio80.rhcloud.com/activity-details?name=' + $routeParams.activityId)
+    .success(function (activity) {
 
-        $scope.activity = activity;
-        $scope.userObj = {
-          username: "name"
-        };
-      })
-      .then(function () {
-
-        navigator.geolocation.getCurrentPosition(function (pos) {
-
-          directionsDisplay = new google.maps.DirectionsRenderer();
-          currentPosition = new google.maps.LatLng(pos.latitude, pos.longitude);
-
-          mapOptions.zoom = 7;
-          mapOptions.center = currentPosition;
-
-          map = new google.maps.Map(document.getElementById('map'), mapOptions);
-          directionsDisplay.setMap(map);
-          calculateRoute(pos);
-        });
-      });
-
-    var calculateRoute = function (pos) {
-
-      var start = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-      var end = $scope.activity.address.street + " " + $scope.activity.address.postalcode + ", " + $scope.activity.address.city;
-      var request = {
-        origin: start,
-        destination: end,
-        travelMode: google.maps.TravelMode.DRIVING
+      $scope.activity = activity;
+      $scope.userObj = {
+        username: "name"
       };
-      directionsService.route(request, function (response, status) {
+    })
+    .then(function () {
 
-        if (status === google.maps.DirectionsStatus.OK) {
+      navigator.geolocation.getCurrentPosition(function (pos) {
 
-          directionsDisplay.setDirections(response);
-        }
-      })
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        currentPosition = new google.maps.LatLng(pos.latitude, pos.longitude);
+
+        mapOptions.zoom = 7;
+        mapOptions.center = currentPosition;
+
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        directionsDisplay.setMap(map);
+        calculateRoute(pos);
+      });
+    });
+
+  var calculateRoute = function (pos) {
+
+    var start = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+    var end = $scope.activity.address.street + " " + $scope.activity.address.postalcode + ", " + $scope.activity.address.city;
+    var request = {
+      origin: start,
+      destination: end,
+      travelMode: google.maps.TravelMode.DRIVING
     };
-  }]);
+    directionsService.route(request, function (response, status) {
 
+      if (status === google.maps.DirectionsStatus.OK) {
+
+        directionsDisplay.setDirections(response);
+      }
+    })
+  };
+}]);
+
+// This would not run on openshift!! Spent 5 hours to find that out!!
+//ActivityListCtrl.loadData = function ($q, $http) {
+//
+//  console.log('in load data');
+//  var defer = $q.defer();
+//
+//  $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
+//    //$http.get('http://localhost:8000/authenticate')
+//    .success(function(response, status) {
+//
+//      defer.resolve();
+//    })
+//    .error(function(response) {
+//
+//      // if response is null, server is down.
+//      if (response === null) {
+//
+//        defer.resolve();
+//      }
+//      else {
+//
+//        defer.reject();
+//      }
+//    });
+//
+//
+//  return defer.promise;
+//};
 'use strict';
 
 /**

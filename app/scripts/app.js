@@ -31,7 +31,7 @@ angular
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html'
+        templateUrl: 'views/login.html'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
@@ -52,21 +52,34 @@ angular
       })
       .when('/activities', {
         templateUrl: 'views/main.html',
+        controller: 'ActivityListCtrl',
         resolve: {
-          view: function ($q, $http) {
+          loadData: function ($q, $http) {
 
+            console.log('in load data');
             var defer = $q.defer();
 
-            //$http.get('http://easyact-portfolio80.rhcloud.com/authenticate').success(function(response) {
-            $http.get('http://localhost:8000/authenticate').success(function(response) {
+            $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
+              //$http.get('http://localhost:8000/authenticate')
+              .success(function(response, status) {
 
-                console.log(response);
                 defer.resolve();
-                return defer.promise;
-            });
+              })
+              .error(function(response) {
 
-            defer.reject();
-            //defer.resolve();
+                // if response is null, server is down.
+                if (response === null) {
+
+                  defer.resolve();
+                }
+                else {
+
+                  defer.reject();
+                }
+              });
+
+
+            return defer.promise;
           }
         }
       })
@@ -79,15 +92,22 @@ angular
       });
 
     // Executed for statuscodes >= 300
-    $httpProvider.interceptors.push(function ($q, $location) {
-      return {
-        responseError: function (rejection) {
-          if (rejection.status === 401) {
-            console.log('NOT AUTHORIZED!');
-            $location.path('/');
-          }
-          return $q.reject(rejection);
-        }
-      }
+    //$httpProvider.interceptors.push(function ($q, $location) {
+    //  return {
+    //    responseError: function (rejection) {
+    //      if (rejection.status === 401) {
+    //        console.log('NOT AUTHORIZED!');
+    //        $location.path('/');
+    //      }
+    //      return $q.reject(rejection);
+    //    }
+    //  }
+    //})
+  })
+  .controller('AppCtrl', function ($scope, $rootScope, $location) {
+
+    $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
+
+      $location.path('/');
     })
   });

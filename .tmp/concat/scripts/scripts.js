@@ -78,10 +78,11 @@ angular
             else {
 
               console.log("server down");
+              localStorage.setItem('offlineMessage', "Du är inte ansluten till internet.");
               //$rootScope.offline = true;
 
-              //defer.resolve();
-              defer.reject("offline");
+              defer.resolve();
+              //defer.reject("offline");
             }
 
             return defer.promise;
@@ -110,6 +111,8 @@ angular
     //})
   }])
   .controller('AppCtrl', ["$scope", "$rootScope", "$location", function ($scope, $rootScope, $location) {
+
+    $scope.offlineMessage = localStorage.getItem('offlineMessage');
 
     $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
 
@@ -211,11 +214,13 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
     // First retrieve user position.
     .then(function () {
 
-      navigator.geolocation.getCurrentPosition(function (pos) {
+      console.log('you are at the geolocation!');
 
-        store.pos = pos.coords;
-        console.log(navigator.onLine);
-        if (navigator.onLine) {
+      if (navigator.onLine) {
+        console.log("geolocation is sets of");
+        navigator.geolocation.getCurrentPosition(function (pos) {
+
+          store.pos = pos.coords;
 
           activityService.getActivities(store.pos)
             .success(function (data) {
@@ -226,13 +231,14 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
               console.log(JSON.parse(localStorage.getItem('activities')));
               console.log(data);
             });
-        }
-        else {
-          console.log("do the offline work!");
-          console.log(JSON.parse(localStorage.getItem('activities')));
-          store.activities = JSON.parse(localStorage.getItem('activities'));
-        }
-      });
+        });
+      }
+      else {
+
+        console.log("do the offline work!");
+        console.log(JSON.parse(localStorage.getItem('activities')));
+        store.activities = JSON.parse(localStorage.getItem('activities'));
+      }
     });
 
   defer.resolve();

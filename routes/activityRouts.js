@@ -44,14 +44,10 @@ module.exports = function(app) {
             user.nextupdate = +new Date() + 600000;
 
             user.save();
-            console.log('Im done and also one hour has passed since last call to weather API.');
 
             next();
           });
         }
-
-        console.log('Using cached weather data.');
-        console.log(user.weather);
         // Retrieve weather from database and assign to the request object
         req.weather = user.weather;
         next();
@@ -69,13 +65,12 @@ module.exports = function(app) {
   // MONGO DB geospatial query
   app.get('/near-activities', function (req, res) {
 
-    console.log("lat: " + req.param('lat'));
-    console.log("lon: " + req.param('lon'));
+    // (lat, long) is given in opposite order to mongoDB geospatial query, hence (long, lat)
     Activity.find({
       loc: {
         $geoWithin: {
           $centerSphere: [
-            [16.3577567, 56.6775846], 500/6371]
+            [req.param('lon'), req.param('lat')], 500/6371]
         }
       }
     }, function(err, activities) {

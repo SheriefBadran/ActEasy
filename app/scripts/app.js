@@ -9,10 +9,10 @@
  * Main module of the application.
  */
 angular
-  .module('activities', []);
+  .module('activities', ['ngSanitize']);
 
 angular
-  .module('services', []);
+  .module('services', ['ngSanitize']);
 
 angular
   .module('actEasy', [
@@ -45,29 +45,22 @@ angular
           }
         }
       })
-      .when('/auth', {
-        controller: function () {
-          console.log('hej');
-        }
-      })
       .when('/activities', {
         templateUrl: 'views/main.html',
         controller: 'ActivityListCtrl',
         resolve: {
           loadData: function ($q, $http) {
 
-            console.log('in load data');
             var defer = $q.defer();
 
-
-            console.log(navigator.onLine);
             if (navigator.onLine) {
 
-              //$http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
-              $http.get('http://localhost:8000/authenticate')
-                .success(function(response, status) {
+              $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
+              //$http.get('http://localhost:8000/authenticate')
+                .success(function(response) {
 
                   localStorage.setItem('user', JSON.stringify(response.google));
+                  localStorage.setItem('login', 'login');
                   defer.resolve();
                 })
                 .error(function(response) {
@@ -77,12 +70,9 @@ angular
             }
             else {
 
-              console.log("server down");
-              localStorage.setItem('offlineMessage', "Du är inte ansluten till internet.");
-              //$rootScope.offline = true;
-
+              localStorage.setItem('offlineMessage', "Du är inte ansluten till internet. Easyact är nu i offline-läge vilket innebär att du kan" +
+              " se de aktiviteter som senast laddades online.");
               defer.resolve();
-              //defer.reject("offline");
             }
 
             return defer.promise;
@@ -96,38 +86,30 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-
-    // Executed for statuscodes >= 300
-    //$httpProvider.interceptors.push(function ($q, $location) {
-    //  return {
-    //    responseError: function (rejection) {
-    //      if (rejection.status === 401) {
-    //        console.log('NOT AUTHORIZED!');
-    //        $location.path('/');
-    //      }
-    //      return $q.reject(rejection);
-    //    }
-    //  }
-    //})
   })
   .controller('AppCtrl', function ($scope, $rootScope, $location) {
+    console.log('motherCtrl');
+
+    //var store = this;
+    //if (localStorage.getItem('login') === 'login') {
+    //
+    //  store.login = true;
+    //}
+    //
+    //store.logout = function () {
+    //
+    //  if (localStorage.getItem('login') === 'login') {
+    //    console.log('mistake');
+    //    localStorage.setItem('login', 'logout');
+    //  }
+    //};
 
     $scope.offlineMessage = localStorage.getItem('offlineMessage');
 
     $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
 
-      if (rejection === "offline") {
-
-        console.log("YES!!");
-        $scope.activities = JSON.parse(localStorage.getItem('activities'));
-        $scope.offline = true;
-      }
-      else {
-
-        $scope.showResponse = true;
-        $scope.loginResponse = rejection;
-        $location.path('/');
-      }
-
-    })
+      $scope.showResponse = true;
+      $scope.loginResponse = rejection;
+      $location.path('/')
+    });
   });

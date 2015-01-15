@@ -6,6 +6,7 @@
  * @description
  * # directionsMap
  */
+//TODO: Currently not used but will be in future.
 angular.module('activities')
   .directive('directionsMap', ['googleApiService', function (google) {
     return {

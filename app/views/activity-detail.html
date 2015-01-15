@@ -16,12 +16,12 @@
                         {{activity.address.city}}<br>
                     </address>
                     <address>
-                        <span class="glyphicon glyphicon-phone"></span> {{activity.contact.tel}}<br>
-                        <span class="glyphicon glyphicon-envelope"></span> {{activity.contact.email}}<br>
-                        <span class="glyphicon glyphicon-globe"></span> {{activity.contact.website}}<br>
+                        <a href="{{'tel:' + activity.contact.tel}}"><span class="glyphicon glyphicon-phone"></span> {{activity.contact.tel}}</a><br>
+                        <a href="{{'mailto:' + activity.contact.email}}"><span class="glyphicon glyphicon-envelope"></span> {{activity.contact.email}}</a><br>
+                        <a href="{{activity.contact.website}}" target="_blank"><span class="glyphicon glyphicon-globe"></span> {{activity.contact.website}}</a>
                     </address>
                     <div>
-                        <a ng-href="{{activity.bookinglink}}" class="btn btn-success" ng-show="activity.booking" target="_blank">Boka aktivitet</a>
+                        <a ng-href="{{activity.bookinglink}}" target="_blank" class="btn btn-success" ng-show="activity.booking">Boka aktivitet</a>
                     </div>
                 </div>
             </div>

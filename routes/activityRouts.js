@@ -81,6 +81,7 @@ module.exports = function(app) {
     }, function(err, activities) {
 
       var evaluatedActivities = evaluateActivities(activities, req.weather);
+      console.log(evaluatedActivities);
       res.send(evaluatedActivities);
     });
   });

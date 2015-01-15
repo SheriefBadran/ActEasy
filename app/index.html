@@ -1,10 +1,11 @@
 <!doctype html>
-<html class="no-js" ng-app="actEasy" ng-controller="AppCtrl" manifest="../deploy.mf">
+<html class="no-js" ng-app="actEasy" ng-controller="AppCtrl as test" manifest="../deploy.mf">
   <head>
     <meta charset="utf-8">
     <title>Act Easy</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -26,8 +27,8 @@
 
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" ng-href="#">
-            Easyact
+          <a class="navbar-brand" ng-href="#/activities">
+            Easyact Aktiviteter
           </a>
           <button class="navbar-toggle" data-target="#navbar-main" data-toggle="collapse" type="button" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
@@ -41,14 +42,11 @@
             <li>
               <a ng-href="#/about">Om Easyact</a>
             </li>
-            <li>
-              <a ng-href="#/contact">Kontakt</a>
-            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="//localhost:8000/logout">Logga ut</a>
-              <!--<a href="//easyact-portfolio80.rhcloud.com/logout">Logga ut</a>-->
+              <!--<a href="//localhost:8000/logout">Logga ut</a>-->
+              <a href="//easyact-portfolio80.rhcloud.com/logout">Logga ut</a>
             </li>
           </ul>
         </div>
@@ -119,10 +117,10 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/activity.js"></script>
-        <!--<script src="scripts/directives/tabgroup.js"></script>-->
         <script src="scripts/directives/activities.js"></script>
         <script src="scripts/services/weatherService.js"></script>
         <script src="scripts/services/activityService.js"></script>
+        <script src="scripts/services/googleApiService.js"></script>
         <script src="scripts/controllers/view.js"></script>
         <script src="scripts/services/authenticationservice.js"></script>
         <!-- endbuild -->

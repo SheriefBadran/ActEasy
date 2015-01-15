@@ -17,5 +17,5 @@ app/scripts/directives/activities.js
 app/scripts/directives/directionsmap.js
 app/scripts/services/activityService.js
 app/scripts/services/authenticationservice.js
-app/scripts/services/googleapiservice.js
+app/scripts/services/googleApiService.js
 app/scripts/services/weatherService.js

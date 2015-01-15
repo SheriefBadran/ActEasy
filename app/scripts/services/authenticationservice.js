@@ -7,6 +7,7 @@
  * # authenticationService
  * Service in the scaffoldTestApp.
  */
+//TODO: This module is currently not used. Dependency inject it into app.js
 angular.module('services')
   .service('authenticationService', ['$http', function ($http) {
 

@@ -1,5 +1,8 @@
 # Rapport
 
+## Demonstrationsvideo
+[Klicka här för att se demonstrationsvideon ](https://www.youtube.com/watch?v=S7NIj3FYow8&feature=youtu.be)
+
 ## Möjlighet
 Mängder av mjukvaruutvecklare genererar hundratusentals små appar som förser kunden med alltför snäv information, vilken heller inte följs upp med
 omedelbara möjligheter att snabbt utföra sina vardagsärenden.  Det stora utbudet leder till problem med ett rörigt utbud och dålig kundservice.
@@ -125,7 +128,7 @@ Egentligen finns det hur mycket utvecklingspotential som helst, det är fantasin
 * Generellt behöver applikationen bättre hantering av möjliga fel som kan uppstå både på server och klient.
 
 ## Betygshöjande moment.
-Jag tycker att följande borde räknas som betygshöjande.
+Jag tycker att följande borde räknas som betygshöjande:
 * Att jag antagit utmaningen att jobba i en yeoman genererad miljö, vilket har varit en stor utmaning för mig och även ett mycket stort riskmoment. En sådan miljö är väldigt kraftfull och smidig att jobba ju mer man lär sig hantera vissa problem och göra vissa “tweeks” när det behövs.
 * Att jag antagit utmaningen att jobba i **angularjs** som är helt nytt för mig, och som jag har upplevt som ganska svårt att lära sig under den tidspress som varit.
 * Att jag skapat en **single page application**, och implementerat **Google Oauth 2** har varit en utmaning i allra högsta grad.

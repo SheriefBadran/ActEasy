@@ -34,7 +34,7 @@
     <p>{{activitiesCtrl.serverErrorMessage}}</p>
   </div>
 
-  <div ng-init="tab=1" ng-if="!activitiesCtrl.activitiesError && !activitiesCtrl.serverErrorMessage">
+  <div ng-init="tab=1" ng-if="!activitiesCtrl.activitiesError && !activitiesCtrl.serverErrorMessage && !activitiesCtrl.geoLocationDenied">
     <button ng-class="{ active: tab===1 }" class="btn btn default btn-sm" ng-click="activitiesCtrl.showAll(); tab=1">Alla</button>
     <button ng-class="{ active: tab===2 }" class="btn btn default btn-sm" ng-click="activitiesCtrl.showIndoorsOnly(); tab=2">Inomhus</button>
     <button ng-class="{ active: tab===3 }" class="btn btn default btn-sm" ng-click="activitiesCtrl.showOutdoorsOnly(); tab=3">Utomhus</button>

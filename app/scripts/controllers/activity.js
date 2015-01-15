@@ -91,12 +91,19 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
       });
   }
 
+  // Runs if geolocation is denied.
   function errorCallback (err) {
 
     if (err.code === 1) {
 
       activitiesCallback(defaultPosition);
       store.geoLocationDenied = "Easyact ser dig! Du sitter i kalmar nyckel.";
+
+      // render cached activities if they exist.
+      if (localStorage.getItem('activities')) {
+
+        store.activities = JSON.parse(localStorage.getItem('activities'));
+      }
     }
   }
 

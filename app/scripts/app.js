@@ -88,7 +88,6 @@ angular
       });
   })
   .controller('AppCtrl', function ($scope, $rootScope, $location) {
-    console.log('motherCtrl');
 
     //var store = this;
     //if (localStorage.getItem('login') === 'login') {

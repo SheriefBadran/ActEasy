@@ -88,7 +88,6 @@ angular
       });
   }])
   .controller('AppCtrl', ["$scope", "$rootScope", "$location", function ($scope, $rootScope, $location) {
-    console.log('motherCtrl');
 
     //var store = this;
     //if (localStorage.getItem('login') === 'login') {
@@ -257,7 +256,7 @@ var ActivityDetailCtrl = activities.controller('ActivityDetailCtrl', ['$scope', 
   if (navigator.onLine) {
 
     //$http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
-      $http.get('http://easyact-portfolio80.rhcloud.com/activity-details?name=' + $routeParams.activityId)
+    $http.get('http://easyact-portfolio80.rhcloud.com/activity-details?name=' + $routeParams.activityId)
       .success(function (activity) {
 
         $scope.activity = JSON.parse(JSON.stringify(activity));
@@ -558,7 +557,7 @@ angular.module('services')
 
     this.authenticate = function(){
 
-      return $http.get('http://localhost:8000/authenticate');
-      //return $http.get('http://easyact-portfolio80.rhcloud.com/authenticate');
+      //return $http.get('http://localhost:8000/authenticate');
+      return $http.get('http://easyact-portfolio80.rhcloud.com/authenticate');
     };
   }]);

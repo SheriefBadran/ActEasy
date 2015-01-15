@@ -49,6 +49,19 @@ body {
   border: #009688;
 }
 
+#about-container .panel-heading {
+  background: #009688;
+}
+
+#about-container .panel-heading h3  {
+  color: #fff;
+}
+
+#detailed-container .panel-body {
+  border: #009688;
+}
+
+
 .btn {
   background: #aa00ff;
   border: #e040fb;

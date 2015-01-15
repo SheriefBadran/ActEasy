@@ -103,6 +103,7 @@ Det har varit inspirerande och lärorikt att jobba i en yeoman miljö men samtid
 * Jag har haft problem med att nodejs är så pass versionskänsligt. Jag ägnade en heldag till att försöka göra en deploy till min open shift server. Detta misslyckades eftersom att jag med ett misstag råkat installera en något äldre version av mongoose på open shift än lokalt. Det svåra med att upptäcka felet var att jag från början inte visste hur man debuggar fel som uppstår på open shift. Först när jag körde ett debug kommando i terminalen kunde jag spåra felet.
 * Ytterligare ett deployproblem uppstod då jag skulle pusha upp min första lyckade implementation av google oauth 2. Jag har avsiktligt sparat bortkommenterad kod i filen activity.js. Där finns metoden loadData som kördes och fungerade helt utmärkt lokalt. På open shift kraschade applikationen. Jag ägnade ca 6 timmar åt att lösa problemet, vilket löstes genom att flytta loadData till resolve delen av en route i filen app.js.
 * Det tog pinsamt lång tid att implementera Google OAuth2. Många problem uppstod på vägen. Det är första gången jag försöker hantera **inloggning** tillsammans på en **single page application**.
+* Har ej lyckats dölja och visa login länken beroende på om man är inloggad eller inte. Har inte fått till det i angular.
 
 ## Utvecklingspotential
 

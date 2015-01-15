@@ -55,8 +55,8 @@ angular
 
             if (navigator.onLine) {
 
-              //$http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
-              $http.get('http://localhost:8000/authenticate')
+              $http.get('http://easyact-portfolio80.rhcloud.com/authenticate')
+              //$http.get('http://localhost:8000/authenticate')
                 .success(function(response) {
 
                   localStorage.setItem('user', JSON.stringify(response.google));
@@ -86,20 +86,6 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-
-    //$httpProvider.interceptors.push(function ($q, $location) {
-    //  return {
-    //    responseError: function (rejection) {
-    //
-    //      if (rejection.status === 500) {
-    //
-    //        console.log(rejection);
-    //        $location.path('/activities');
-    //      }
-    //      return $q.reject(rejection);
-    //    }
-    //  }
-    //});
   })
   .controller('AppCtrl', function ($scope, $rootScope, $location) {
 

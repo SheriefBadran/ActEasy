@@ -125,6 +125,7 @@ Följande kan göras för att vidareutveckla Easyact:
 * En fullt fungerande offline-first lösning.
 * Användaren ska kunna betygsätta och eventuellt kommentera aktiviteter.
 * En spinner och ett meddelande som visas då det dröjer att ladda aktiviteter.
+* Färga border som avgränsar och omger varje del i listvyn till en grön nyans som används i färgtemat.
 Egentligen finns det hur mycket utvecklingspotential som helst, det är fantasin som sätter gränsen.
 
 ## Risker

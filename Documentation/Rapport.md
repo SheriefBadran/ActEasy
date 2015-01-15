@@ -124,6 +124,7 @@ Följande kan göras för att vidareutveckla Easyact:
 * Användaren ska kunna styra sökradien runt sig själv.
 * En fullt fungerande offline-first lösning.
 * Användaren ska kunna betygsätta och eventuellt kommentera aktiviteter.
+* En spinner och ett meddelande som visas då det dröjer att ladda aktiviteter.
 Egentligen finns det hur mycket utvecklingspotential som helst, det är fantasin som sätter gränsen.
 
 ## Risker

@@ -28,6 +28,7 @@ module.exports = function(app) {
 
         if (user.nextupdate < +new Date()) {
 
+          // Request to SMHI API
           request.get(options, function (error, response, body) {
 
             // Maybe cache to file here.
@@ -46,7 +47,7 @@ module.exports = function(app) {
             user.save();
 
             next();
-          });
+          })
         }
         // Retrieve weather from database and assign to the request object
         req.weather = user.weather;

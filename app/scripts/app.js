@@ -86,6 +86,20 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+
+    //$httpProvider.interceptors.push(function ($q, $location) {
+    //  return {
+    //    responseError: function (rejection) {
+    //
+    //      if (rejection.status === 500) {
+    //
+    //        console.log(rejection);
+    //        $location.path('/activities');
+    //      }
+    //      return $q.reject(rejection);
+    //    }
+    //  }
+    //});
   })
   .controller('AppCtrl', function ($scope, $rootScope, $location) {
 

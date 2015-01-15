@@ -36,8 +36,7 @@ module.exports = function(app) {
 
         User.findOne({'google.name': 'Sherief Badran'}, function (err, user) {
 
-          // user.nextupdate
-          if (1 < +new Date()) {
+          if (user && user.nextupdate < +new Date()) {
 
             request.get(options, function (error, response, body) {
 
@@ -58,6 +57,11 @@ module.exports = function(app) {
                 user.nextupdate = +new Date() + 600000;
                 user.save();
                 callback(false, user.weather);
+              }
+
+              if (err || response.statusCode > 300) {
+
+                callback("errormessage", response);
               }
             });
           }
@@ -93,9 +97,13 @@ module.exports = function(app) {
     function(err, result) {
 
       if(err) {
+        var response = "Internal Server Error";
+        // If err, try send the activities to client any way.
+        if (result.activities) {
 
-        console.log(err);
-        res.send(500,"Server Error");
+          response = result.activities;
+        }
+        res.send(500, response);
         return;
       }
 

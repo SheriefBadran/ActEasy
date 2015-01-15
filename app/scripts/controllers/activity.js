@@ -17,7 +17,9 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
   store.activities = [];
   store.activitiesError = "";
   store.offlineMessage = "";
+  store.apiDownMessage = "";
   store.geoLocationDenied = "";
+  store.serverErrorMessage = "";
   store.showOutdoors = true;
   store.showIndoors = true;
   store.user = JSON.parse(localStorage.getItem('user'));
@@ -64,6 +66,27 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
         catch (e) {
 
           store.activitiesError = "Ett fel inträffade när aktiviteterna skulle hämtas, var vänlig försök igen om en stund.";
+        }
+      })
+      .error(function(data, status) {
+
+        if (status === 500) {
+
+          var cachedActivities = JSON.parse(localStorage.getItem('activities'));
+          if (cachedActivities) {
+
+            store.activities = cachedActivities;
+            store.apiDownMessage = 'Easyact har för tillfället ingen tillgång till väderdata. Akvititeterna prioriteras efter senaste hämtade väderdatat.';
+          }
+          else if (data.length) {
+
+            store.activities = data;
+            store.apiDownMessage = 'Easyact har för tillfället ingen tillgång till väderdata. Aktiviteterna är därför inte prioriterade efter väder.';
+          }
+          else {
+            console.log('server error!');
+            store.serverErrorMessage = 'Ett serverfel har inträffat! Försök igen genom att ladda om sidan.';
+          }
         }
       });
   }

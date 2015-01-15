@@ -22,7 +22,19 @@
     <p>{{activitiesCtrl.geoLocationDenied}}</p>
   </div>
 
-  <div ng-init="tab=1" ng-if="!activitiesCtrl.activitiesError">
+  <!-- Inform user if external API is down  -->
+  <div class="alert alert-dismissable alert-info" ng-if="activitiesCtrl.apiDownMessage">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <p>{{activitiesCtrl.apiDownMessage}}</p>
+  </div>
+
+  <!-- Inform of internal server error -->
+  <div class="alert alert-dismissable alert-danger" ng-if="activitiesCtrl.serverErrorMessage">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <p>{{activitiesCtrl.serverErrorMessage}}</p>
+  </div>
+
+  <div ng-init="tab=1" ng-if="!activitiesCtrl.activitiesError && !activitiesCtrl.serverErrorMessage">
     <button ng-class="{ active: tab===1 }" class="btn btn default btn-sm" ng-click="activitiesCtrl.showAll(); tab=1">Alla</button>
     <button ng-class="{ active: tab===2 }" class="btn btn default btn-sm" ng-click="activitiesCtrl.showIndoorsOnly(); tab=2">Inomhus</button>
     <button ng-class="{ active: tab===3 }" class="btn btn default btn-sm" ng-click="activitiesCtrl.showOutdoorsOnly(); tab=3">Utomhus</button>

@@ -22,6 +22,7 @@ module.exports = function(app) {
     var lat = +(Math.round(parseFloat(req.param('lat')) + "e+2") + "e-2");
     var lon = +(Math.round(parseFloat(req.param('lon')) + "e+2") + "e-2");
 
+    // TODO: Consider making async.parallel a module.
     async.parallel({
       /*
        * Request to weather API and connect weather to user.

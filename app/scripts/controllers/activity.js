@@ -100,6 +100,7 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
       store.geoLocationDenied = "Easyact ser dig! Du sitter i kalmar nyckel.";
 
       // render cached activities if they exist.
+      //TODO: If trouble, remove this if statement.
       if (localStorage.getItem('activities')) {
 
         store.activities = JSON.parse(localStorage.getItem('activities'));

@@ -112,6 +112,7 @@ Det har varit inspirerande och lärorikt att jobba i en yeoman miljö men samtid
 * Har ej lyckats dölja och visa login länken beroende på om man är inloggad eller inte. Har inte fått till det i angular.
 * Förhindra åtkomst av inloggningsvyn i inloggat läge!
 * Förhindra att tom detaljerad vy syns när uri skrivs på formatet easyact-portfolio80.rhcloud.com/activities/bullshit.
+* Hann ej med att lägga in sträcka, resetid och vägbeskrivning i detaljerad vy. Gjorde dock ett misslyckat försök. Det skulle ta för lång tid att finna lösningen. Datat finns, men jag lyckades inte komma åt den från min googleMapsService.
 
 En del småfel som tyvärr ger ett oproffsigt intryck har jag helt enkelt inte hunnit med att fixa. Dock är Easyact en applikation jag brinner för
 och kommer att jobba vidare med.
@@ -125,6 +126,7 @@ Följande kan göras för att vidareutveckla Easyact:
 * Med hänsyn till ovanstående punkt behöver även prioritetsalgoritmen förbättras. Det tog mycket tid att fundera ut hur algoritmen skulle fungera vilket förklarar att den är ganska slarvigt skriven. En sådan algoritm kan aldrig bli tillräckligt bra. Något man kan jobba med i åratal. Algoritmen är ju också i högsta grad levande under den tid applikationen utvecklas som mest.
 * Skapa ett gränssnitt för att låta användare själva lägga till aktiviteter till databasen.
 * I så stor utsträckning som möjligt inleda samarbete med aktivitetsarrangörer av olika slag för att förbättra applikationen på många plan. Jag är då ute efter bokningsmöjligheter och även köp om så krävs.
+* Tider och alternativ att ta sig till aktiviteten med kollektivtrafik presenteras i den detaljerade vyn.
 * Applikationen behöver bilder på aktiviteterna.
 * Användaren ska kunna styra sökradien runt sig själv.
 * En fullt fungerande offline-first lösning.

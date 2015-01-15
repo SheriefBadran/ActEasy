@@ -2,6 +2,7 @@
 
 ## Demonstrationsvideo
 [Klicka här för att se demonstrationsvideon ](https://www.youtube.com/watch?v=S7NIj3FYow8&feature=youtu.be)
+[Klicka här för att komma till applikationen easyact ](http://easyact-portfolio80.rhcloud.com)
 
 ## Möjlighet
 Mängder av mjukvaruutvecklare genererar hundratusentals små appar som förser kunden med alltför snäv information, vilken heller inte följs upp med

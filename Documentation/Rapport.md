@@ -110,6 +110,11 @@ Det har varit inspirerande och lärorikt att jobba i en yeoman miljö men samtid
 * Ytterligare ett deployproblem uppstod då jag skulle pusha upp min första lyckade implementation av google oauth 2. Jag har avsiktligt sparat bortkommenterad kod i filen activity.js. Där finns metoden loadData som kördes och fungerade helt utmärkt lokalt. På open shift kraschade applikationen. Jag ägnade ca 6 timmar åt att lösa problemet, vilket löstes genom att flytta loadData till resolve delen av en route i filen app.js.
 * Det tog pinsamt lång tid att implementera Google OAuth2. Många problem uppstod på vägen. Det är första gången jag försöker hantera **inloggning** tillsammans på en **single page application**.
 * Har ej lyckats dölja och visa login länken beroende på om man är inloggad eller inte. Har inte fått till det i angular.
+* Förhindra åtkomst av inloggningsvyn i inloggat läge!
+* Förhindra att tom detaljerad vy syns när uri skrivs på formatet easyact-portfolio80.rhcloud.com/activities/bullshit.
+
+En del småfel som tyvärr ger ett oproffsigt intryck har jag helt enkelt inte hunnit med att fixa. Dock är Easyact en applikation jag brinner för
+och kommer att jobba vidare med.
 
 ## Utvecklingspotential
 

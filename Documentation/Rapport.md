@@ -50,13 +50,18 @@ Routes innehåller två moduler, en som tillhandahåller ett rest api för hämt
 
 Jag är klart medveten om att uppdelning och organisering av moduler kan ske på ett mycket bättre sätt än nuvarande uppdelning.
 T.ex borde koden som frågar SMHI om data vara löst kopplat till activityRouts. activityRoutes ska inte bry sig om vilket väderapi det
-sker förfrågningar emot. För kommunikation mot SMHI används ramverket **request**.
+sker förfrågningar emot. För kommunikation med SMHI och mongoDB (GeoSpatialQueries) används ramverkem **request och async**.
 
 Väderdatat **cachas** i en en mongodatabas under samlingen user. Väderdatat binds alltså till användaren som gjort aktivitetsförfrågan.
 Väderdatat ska **uppdateras ca var tionde minut.**
 
 Servern innehåller också en särskild modul som utgör prioritetsalgoritmen. När servern hämtat ut alla aktiviteter från databasen skickas dessa tillsammans med väderdatat till prioritetsalgoritmen som sätter en poäng på aktiviteten. Poängen beror på hur lämpad aktiviteten är för rådande väder.
 Aktivitetsmodulen returnerar sedan alla aktiviteter poängsatta och klara för att skickas till klienten.
+
+Servern tar i huvudsak hand om följande fel:
+
+* SMHI api går ner.
+* Misslyckade databasförfrågningar.
 
 ## Klientsida
 

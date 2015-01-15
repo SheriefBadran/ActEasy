@@ -85,9 +85,15 @@ module.exports = function(app) {
           }
         }, function (err, activities) {
 
-          console.log('activities sent with score');
-          //var evaluatedActivities = evaluateActivities(activities, req.weather);
-          callback(false, activities);
+          if (!err) {
+
+            callback(false, activities);
+          }
+          else {
+
+            callback("errormessage", err);
+          }
+
         });
       }
     },

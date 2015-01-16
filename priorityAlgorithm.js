@@ -4,15 +4,8 @@
 
 module.exports = function (activities, weather) {
 
-  console.log('Inside the algorithm module');
-  console.log('activities parameter: ' + activities);
-  console.log('weather parameter: ' + weather);
-  console.log('temperature: ' + weather.t);
   for (var i = 0, max = activities.length; i < max; i++) {
-    console.log('inside the loop');
-    console.log(activities[i].priorityref);
-    console.log(activities[i].name);
-    console.log(typeof activities[i]);
+
     activities[i].score = 0;
     // TODO: The algorithm has many repeating chunks of code. Refactor!
     if (!activities[i].indoors) {

@@ -48,7 +48,6 @@ if ('development' == env) {
     app.use(errorHandler({ dumpExceptions: true, showStack: true }));
 }
 
-
 //Start server
 var ipaddr  = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var port    = parseInt(process.env.OPENSHIFT_NODEJS_PORT) || 8000;

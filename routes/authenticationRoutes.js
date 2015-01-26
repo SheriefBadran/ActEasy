@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
   // send to google to do the authentication
   // profile gets us basic user information including user name
   // email gets user email
-  // TODO: Check for other google scopes.
+  // TODO: Check for other google scopes. Is gender and age included in profile or is it accessible another scope?
 
   app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 

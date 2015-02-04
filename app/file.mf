@@ -1,6 +1,6 @@
 CACHE MANIFEST
+index.html
 partials/activity-section.html
-partials/product-description.html
 views/about.html
 views/activity-detail.html
 views/login.html

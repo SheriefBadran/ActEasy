@@ -8,7 +8,7 @@ views/main.html
 styles/vendor.cabc70f2.css
 styles/main.3106523f.css
 scripts/oldieshim.76f279db.js
-scripts/scripts.763b349c.js
+scripts/scripts.58cf5fe8.js
 scripts/vendor.9ceba24f.js
 
 fonts/glyphicons-halflings-regular.eot

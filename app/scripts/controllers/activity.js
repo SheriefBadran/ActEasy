@@ -58,7 +58,7 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
     store.pos = pos.coords;
     activityService.getActivities(store.pos)
       .success(function (data) {
-        console.log($scope);
+
         try {
 
           store.activities = JSON.parse(JSON.stringify(data));

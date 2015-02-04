@@ -6,9 +6,9 @@ views/activity-detail.html
 views/login.html
 views/main.html
 styles/vendor.cabc70f2.css
-styles/main.3106523f.css
+styles/main.7c9f1fc8.css
 scripts/oldieshim.76f279db.js
-scripts/scripts.58cf5fe8.js
+scripts/scripts.fe2b3d49.js
 scripts/vendor.9ceba24f.js
 
 fonts/glyphicons-halflings-regular.eot

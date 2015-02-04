@@ -71,7 +71,11 @@ angular
             else {
 
               localStorage.setItem('offlineMessage', "Du är inte ansluten till internet. Easyact är nu i offline-läge vilket innebär att du kan" +
-              " se de aktiviteter som senast laddades online.");
+              " se de aktiviteter som senast laddades online. Ladda om webbläsaren när anslutningen är tillbaka.");
+
+              // Hide logout button when user is going offline.
+              // TODO: Find another solution to hide the button. The problem here is that $scope is not at hand within router resolve.
+              $("#navbar-main > ul.nav.navbar-nav.navbar-right > li").addClass('hide-button');
               defer.resolve();
             }
 
@@ -318,6 +322,7 @@ var ActivityDetailCtrl = activities.controller('ActivityDetailCtrl', ['$scope', 
   }
   else {
 
+    $scope.online = false;
     $scope.activity = JSON.parse(localStorage.getItem('activity'));
   }
 }]);

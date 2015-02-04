@@ -137,8 +137,8 @@ var ActivityDetailCtrl = activities.controller('ActivityDetailCtrl', ['$scope', 
   var googleMapsDirectionsObject = googleApiService.getDirectionsLogicObject();
   if (navigator.onLine) {
 
-    $http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
-    //$http.get('http://easyact-portfolio80.rhcloud.com/activity-details?name=' + $routeParams.activityId)
+    //$http.get('http://localhost:8000/activity-details?name=' + $routeParams.activityId)
+    $http.get('http://easyact-portfolio80.rhcloud.com/activity-details?name=' + $routeParams.activityId)
       .success(function (activity) {
 
         $scope.activity = JSON.parse(JSON.stringify(activity));
@@ -168,6 +168,7 @@ var ActivityDetailCtrl = activities.controller('ActivityDetailCtrl', ['$scope', 
   }
   else {
 
+    $scope.online = false;
     $scope.activity = JSON.parse(localStorage.getItem('activity'));
   }
 }]);

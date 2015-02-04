@@ -102,7 +102,7 @@ angular
     //    localStorage.setItem('login', 'logout');
     //  }
     //};
-
+    $scope.online = false;
     $scope.offlineMessage = localStorage.getItem('offlineMessage');
 
     $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {

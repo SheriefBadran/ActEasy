@@ -18,3 +18,6 @@ scripts/services/activityService.js
 scripts/services/authenticationservice.js
 scripts/services/googleApiService.js
 scripts/services/weatherService.js
+
+NETWORK:
+*

@@ -168,4 +168,8 @@ div #detailed-container {
   .jumbotron {
     border-bottom: 0;
   }
+
+  li.hide-button{
+    display: none;
+  }
 }

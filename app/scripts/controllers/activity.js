@@ -12,6 +12,7 @@ var activities = angular.module('activities');
 var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityService', '$q', '$scope', function (activityService, $q, $scope) {
 
   // bind the data to be accessed from directives.
+  $scope.showLogout();
   var defer = $q.defer();
   var store = this;
   store.activities = [];
@@ -57,7 +58,7 @@ var ActivityListCtrl = activities.controller('ActivityListCtrl', ['activityServi
     store.pos = pos.coords;
     activityService.getActivities(store.pos)
       .success(function (data) {
-
+        console.log($scope);
         try {
 
           store.activities = JSON.parse(JSON.stringify(data));

@@ -17,6 +17,8 @@ angular.module('activities')
       },
       controller: function ($scope) {
 
+        console.log('directive controller is running!');
+        console.log($scope);
       }
     };
   });

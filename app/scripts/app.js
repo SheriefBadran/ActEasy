@@ -89,21 +89,21 @@ angular
   })
   .controller('AppCtrl', function ($scope, $rootScope, $location) {
 
-    //var store = this;
-    //if (localStorage.getItem('login') === 'login') {
-    //
-    //  store.login = true;
-    //}
-    //
-    //store.logout = function () {
-    //
-    //  if (localStorage.getItem('login') === 'login') {
-    //    console.log('mistake');
-    //    localStorage.setItem('login', 'logout');
-    //  }
-    //};
-    $scope.online = false;
+    $scope.login = false;
     $scope.offlineMessage = localStorage.getItem('offlineMessage');
+
+    this.hideLogout = function () {
+
+      $scope.login = false;
+    };
+
+    $scope.showLogout = function () {
+
+      if ($scope.login === false) {
+
+        $scope.login = true;
+      }
+    };
 
     $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
 

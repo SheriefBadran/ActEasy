@@ -11,6 +11,11 @@ scripts/oldieshim.76f279db.js
 scripts/scripts.fe2b3d49.js
 scripts/vendor.9ceba24f.js
 
+http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css
+https://maps.google.com/maps/api/js?sensor=true
+http://www.google-analytics.com/analytics.js
+http://www.google-analytics.com/collect?v=1&_v=j32&a=1765228749&t=pageview&…0&_u=MACAAAQBI~&jid=&cid=1890925164.1423092305&tid=UA-XXXXX-X&z=1975688952
+
 fonts/glyphicons-halflings-regular.eot
 fonts/glyphicons-halflings-regular.svg
 fonts/glyphicons-halflings-regular.ttf
